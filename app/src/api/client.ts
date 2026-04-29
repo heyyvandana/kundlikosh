@@ -13,6 +13,8 @@ import type {
   GunaMilanInput,
   DailyInput,
   DailyResponse,
+  LifeStoryInput,
+  LifeStoryResponse,
   PanchangInput,
   PanchangResponse,
   YogasResponse,
@@ -43,4 +45,6 @@ export const api = {
     instance.post<CompatibilityResponse>('/compatibility', body),
   panchang: (body: PanchangInput) => instance.post<PanchangResponse>('/panchang', body),
   daily: (body: DailyInput) => instance.post<DailyResponse>('/daily', body),
+  lifeStory: (body: LifeStoryInput) =>
+    instance.post<LifeStoryResponse>('/life-story', body),
 };

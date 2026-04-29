@@ -19,6 +19,7 @@ export const strings = {
 
     home: 'Home',
     kundli: 'Kundli',
+    story: 'Story',
     match: 'Match',
     devalok: 'Devalok',
     ask: 'Ask',
@@ -78,6 +79,7 @@ export const strings = {
 
     home: 'गृह',
     kundli: 'कुंडली',
+    story: 'फलादेश',
     match: 'मेल',
     devalok: 'देवलोक',
     ask: 'पूछें',

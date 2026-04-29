@@ -183,3 +183,61 @@ export interface PanchangResponse {
   karana: string;
   karana_hi: string;
 }
+
+export interface LifeStoryInput extends BirthInput {
+  on_date?: string;
+  num_future?: number;
+}
+
+export interface RemediesBlock {
+  gemstone: string;
+  metal: string;
+  mantra: string;
+  charity: string;
+  fast: string;
+  deity: string;
+}
+
+export interface PhalitChapter {
+  lord: string;
+  lord_hi: string;
+  start: string;
+  end: string;
+  start_age: number;
+  end_age: number;
+  duration_years: number;
+  house: number;
+  sign: string;
+  sign_hi: string;
+  dignity: 'exalted' | 'own_sign' | 'debilitated' | 'neutral';
+  dignity_label_en: string;
+  dignity_label_hi: string;
+  retrograde: boolean;
+  karakas_en: string[];
+  karakas_hi: string[];
+  house_theme_en: string;
+  house_theme_hi: string;
+  conjunctions: string[];
+  aspects_received: string[];
+  themes_en: string[];
+  themes_hi: string[];
+  summary_en: string;
+  summary_hi: string;
+  timing_notes_en: string[];
+  timing_notes_hi: string[];
+  remedies_en: RemediesBlock;
+  remedies_hi: RemediesBlock;
+  is_past: boolean;
+  is_current: boolean;
+  is_future: boolean;
+}
+
+export interface LifeStoryResponse {
+  name: string;
+  today: string;
+  past: PhalitChapter[];
+  current: PhalitChapter | null;
+  future: PhalitChapter[];
+  overall_signature_en: string;
+  overall_signature_hi: string;
+}

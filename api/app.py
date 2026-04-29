@@ -11,6 +11,7 @@ Endpoints:
     POST /compatibility — ashtakoot guna milan
     POST /panchang      — 5-limb Vedic calendar for any date+location
     POST /daily         — personal daily reading (Tarabala + Chandra Bala + verdict)
+    POST /life-story    — full classical phalit: past/present/future Mahadasha narratives
     GET  /health
 """
 
@@ -28,6 +29,7 @@ from kundlikosh_engine import (
     chart_to_dict,
     compute_chart,
     compute_daily_reading,
+    compute_life_story,
     compute_mahadashas,
     compute_panchang,
     compute_varga,
@@ -169,6 +171,24 @@ def daily(payload: DailyInput):
         timezone_str=payload.timezone,
     )
     return d.to_dict()
+
+
+class LifeStoryInput(BirthInput):
+    on_date: Optional[str] = Field(default=None, description="YYYY-MM-DD; defaults to today")
+    num_future: int = Field(default=5, ge=1, le=8)
+
+
+@app.post("/life-story")
+def life_story(payload: LifeStoryInput):
+    chart = _chart_from(payload)
+    on: Optional[date_cls] = None
+    if payload.on_date:
+        try:
+            on = date_cls.fromisoformat(payload.on_date)
+        except ValueError as e:
+            raise HTTPException(status_code=400, detail=f"invalid on_date: {e}")
+    ls = compute_life_story(chart, on_date=on, num_future=payload.num_future)
+    return ls.to_dict()
 
 
 @app.post("/compatibility")

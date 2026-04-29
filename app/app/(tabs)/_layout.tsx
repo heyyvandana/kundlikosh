@@ -49,6 +49,13 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
+        name="story"
+        options={{
+          title: T.story,
+          tabBarIcon: ({ focused }) => <Icon char="📜" focused={focused} />,
+        }}
+      />
+      <Tabs.Screen
         name="match"
         options={{
           title: T.match,

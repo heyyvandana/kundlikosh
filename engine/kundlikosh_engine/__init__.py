@@ -26,6 +26,7 @@ from .compatibility import (
 )
 from .panchang import Panchang, compute_panchang
 from .daily import DailyReading, compute_daily_reading
+from .phalit import Chapter, LifeStory, compute_life_story
 
 __all__ = [
     "Chart",
@@ -48,6 +49,9 @@ __all__ = [
     "compute_panchang",
     "DailyReading",
     "compute_daily_reading",
+    "Chapter",
+    "LifeStory",
+    "compute_life_story",
 ]
 
 __version__ = "0.1.0"
