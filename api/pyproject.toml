@@ -1,0 +1,14 @@
+[project]
+name = "kundlikosh-api"
+version = "0.1.0"
+description = "FastAPI HTTP wrapper around the KundliKosh Vedic astrology engine."
+requires-python = ">=3.10"
+dependencies = [
+    "kundlikosh-engine",
+    "fastapi>=0.110",
+    "uvicorn[standard]>=0.29",
+    "pydantic>=2",
+]
+
+[tool.uv.sources]
+kundlikosh-engine = { path = "../engine", editable = true }
