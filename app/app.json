@@ -2,6 +2,7 @@
   "expo": {
     "name": "KundliKosh",
     "slug": "kundlikosh",
+    "owner": "vandanaparik",
     "version": "0.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -35,7 +36,11 @@
       "typedRoutes": true
     },
     "extra": {
-      "apiBaseUrl": "https://kundlikosh-api-jcvueixr.fly.dev"
+      "apiBaseUrl": "https://kundlikosh-api-jcvueixr.fly.dev",
+      "router": {},
+      "eas": {
+        "projectId": "3cb4631a-7d1f-4a6d-a151-5f2da3613939"
+      }
     }
   }
 }
