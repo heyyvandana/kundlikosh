@@ -25,6 +25,7 @@ from .compatibility import (
     manglik_status,
 )
 from .panchang import Panchang, compute_panchang
+from .daily import DailyReading, compute_daily_reading
 
 __all__ = [
     "Chart",
@@ -45,6 +46,8 @@ __all__ = [
     "manglik_status",
     "Panchang",
     "compute_panchang",
+    "DailyReading",
+    "compute_daily_reading",
 ]
 
 __version__ = "0.1.0"

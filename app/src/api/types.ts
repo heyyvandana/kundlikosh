@@ -132,6 +132,34 @@ export interface PanchangInput {
   longitude: number;
 }
 
+export interface DailyInput extends BirthInput {
+  on_date: string; // YYYY-MM-DD
+}
+
+export interface TarabalaInfo {
+  position: number; // 1..9
+  name: string;
+  name_hi: string;
+  quality: 'very_auspicious' | 'auspicious' | 'mixed' | 'inauspicious' | 'very_inauspicious';
+  note_en: string;
+  note_hi: string;
+}
+
+export interface ChandraBalaInfo {
+  position: number; // 1..12
+  favorable: boolean;
+}
+
+export interface DailyResponse {
+  date: string;
+  panchang: PanchangResponse;
+  tarabala: TarabalaInfo;
+  chandra_bala: ChandraBalaInfo;
+  overall_score: number; // 0..10
+  verdict_en: string;
+  verdict_hi: string;
+}
+
 export interface PanchangResponse {
   date: string;
   weekday: string;

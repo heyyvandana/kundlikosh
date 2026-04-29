@@ -16,7 +16,8 @@ import { NorthIndianKundli } from '@/components/NorthIndianKundli';
 import { PlanetTable } from '@/components/PlanetTable';
 import { DashaCard } from '@/components/DashaCard';
 import { PanchangCard } from '@/components/PanchangCard';
-import type { DashaResponse, PanchangResponse, YogasResponse } from '@/api/types';
+import { DailyCard } from '@/components/DailyCard';
+import type { DailyResponse, DashaResponse, PanchangResponse, YogasResponse } from '@/api/types';
 
 const MANTRAS: Record<string, { hi: string; trans: string }> = {
   Sun: { hi: 'ॐ सूर्याय नमः', trans: 'Om Suryaya Namaha' },
@@ -48,6 +49,7 @@ export default function Home() {
   const [dasha, setDasha] = useState<DashaResponse | null>(null);
   const [yogas, setYogas] = useState<YogasResponse | null>(null);
   const [panchang, setPanchang] = useState<PanchangResponse | null>(null);
+  const [daily, setDaily] = useState<DailyResponse | null>(null);
   const [loadErr, setLoadErr] = useState<string | null>(null);
 
   useEffect(() => {
@@ -56,7 +58,7 @@ export default function Home() {
     const today = new Date().toISOString().slice(0, 10);
     void (async () => {
       try {
-        const [d, y, pa] = await Promise.all([
+        const [d, y, pa, dr] = await Promise.all([
           api.dasha(profile.birth, 5),
           api.yogas(profile.birth),
           api.panchang({
@@ -65,14 +67,16 @@ export default function Home() {
             latitude: profile.birth.latitude,
             longitude: profile.birth.longitude,
           }),
+          api.daily({ ...profile.birth, on_date: today }),
         ]);
         if (!cancelled) {
           setDasha(d.data);
           setYogas(y.data);
           setPanchang(pa.data);
+          setDaily(dr.data);
         }
       } catch (e) {
-        if (!cancelled) setLoadErr('Could not load dasha/yogas/panchang — check your connection.');
+        if (!cancelled) setLoadErr('Could not load daily reading — check your connection.');
       }
     })();
     return () => {
@@ -112,6 +116,13 @@ export default function Home() {
               <View style={s.divider} />
             </View>
           </View>
+
+          {daily && (
+            <>
+              <SectionTitle en="Today's Reading" hi="आज का फलादेश" />
+              <DailyCard data={daily} />
+            </>
+          )}
 
           {panchang && (
             <>

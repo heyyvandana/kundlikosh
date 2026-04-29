@@ -52,6 +52,7 @@ class PlanetPosition:
     sign_index: int           # 0..11
     degree_in_sign: float
     house: int                # 1..12 whole-sign from lagna
+    nakshatra_index: int      # 0..26
     nakshatra: str
     nakshatra_hi: str
     nakshatra_lord: str
@@ -224,6 +225,7 @@ def compute_chart(
             sign_index=sidx,
             degree_in_sign=degree_in_sign(lon),
             house=whole_sign_house(sidx, lagna_idx),
+            nakshatra_index=nk_idx,
             nakshatra=nk["name"],
             nakshatra_hi=nk["name_hi"],
             nakshatra_lord=nk["lord"],

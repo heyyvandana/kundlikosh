@@ -11,6 +11,8 @@ import type {
   CompatibilityResponse,
   DashaResponse,
   GunaMilanInput,
+  DailyInput,
+  DailyResponse,
   PanchangInput,
   PanchangResponse,
   YogasResponse,
@@ -40,4 +42,5 @@ export const api = {
   compatibility: (body: GunaMilanInput) =>
     instance.post<CompatibilityResponse>('/compatibility', body),
   panchang: (body: PanchangInput) => instance.post<PanchangResponse>('/panchang', body),
+  daily: (body: DailyInput) => instance.post<DailyResponse>('/daily', body),
 };

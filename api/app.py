@@ -10,6 +10,7 @@ Endpoints:
     POST /varga         — divisional charts (D9, D10, ...)
     POST /compatibility — ashtakoot guna milan
     POST /panchang      — 5-limb Vedic calendar for any date+location
+    POST /daily         — personal daily reading (Tarabala + Chandra Bala + verdict)
     GET  /health
 """
 
@@ -26,6 +27,7 @@ from datetime import date as date_cls
 from kundlikosh_engine import (
     chart_to_dict,
     compute_chart,
+    compute_daily_reading,
     compute_mahadashas,
     compute_panchang,
     compute_varga,
@@ -146,6 +148,27 @@ def panchang(payload: PanchangInput):
         timezone_str=payload.timezone,
     )
     return p.to_dict()
+
+
+class DailyInput(BirthInput):
+    on_date: str = Field(..., description="YYYY-MM-DD; the date for the reading")
+
+
+@app.post("/daily")
+def daily(payload: DailyInput):
+    chart = _chart_from(payload)
+    try:
+        on = date_cls.fromisoformat(payload.on_date)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=f"invalid on_date: {e}")
+    d = compute_daily_reading(
+        chart=chart,
+        on_date=on,
+        latitude=payload.latitude,
+        longitude=payload.longitude,
+        timezone_str=payload.timezone,
+    )
+    return d.to_dict()
 
 
 @app.post("/compatibility")
