@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kundlikosh-engine"
+version = "0.1.0"
+description = "Vedic (Lahiri sidereal) astrology engine for KundliKosh — Swiss Ephemeris powered."
+requires-python = ">=3.10"
+dependencies = [
+    "pyswisseph>=2.10",
+    "pytz",
+    "timezonefinder>=8",
+]
+authors = [{ name = "KundliKosh" }]
+license = { text = "MIT" }
+
+[tool.setuptools.packages.find]
+include = ["kundlikosh_engine*"]
