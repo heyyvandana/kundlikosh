@@ -1,7 +1,7 @@
 // Home — recreates the preview HTML in React Native: brand header, patron deity,
 // today's mantra, kundli, yogas chips, planet table, dasha card.
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Pressable, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useProfile } from '@/store/profile';
@@ -15,7 +15,29 @@ import { PatronDeityCard } from '@/components/PatronDeityCard';
 import { NorthIndianKundli } from '@/components/NorthIndianKundli';
 import { PlanetTable } from '@/components/PlanetTable';
 import { DashaCard } from '@/components/DashaCard';
-import type { DashaResponse, YogasResponse } from '@/api/types';
+import { PanchangCard } from '@/components/PanchangCard';
+import type { DashaResponse, PanchangResponse, YogasResponse } from '@/api/types';
+
+const MANTRAS: Record<string, { hi: string; trans: string }> = {
+  Sun: { hi: 'ॐ सूर्याय नमः', trans: 'Om Suryaya Namaha' },
+  Moon: { hi: 'ॐ चन्द्राय नमः', trans: 'Om Chandraya Namaha' },
+  Mars: { hi: 'ॐ अंगारकाय नमः', trans: 'Om Angarakaya Namaha' },
+  Mercury: { hi: 'ॐ बुधाय नमः', trans: 'Om Budhaya Namaha' },
+  Jupiter: { hi: 'ॐ बृहस्पतये नमः', trans: 'Om Brihaspataye Namaha' },
+  Venus: { hi: 'ॐ शुक्राय नमः', trans: 'Om Shukraya Namaha' },
+  Saturn: { hi: 'ॐ शनैश्चराय नमः', trans: 'Om Shanaishcharaya Namaha' },
+};
+const COLORS_BY_LORD: Record<string, string> = {
+  Sun: 'red or saffron',
+  Moon: 'white or pearl',
+  Mars: 'red or coral',
+  Mercury: 'green',
+  Jupiter: 'yellow',
+  Venus: 'white or silver',
+  Saturn: 'dark blue or black',
+};
+const mantraForLord = (lord: string) => MANTRAS[lord] ?? MANTRAS.Moon;
+const colorForLord = (lord: string) => COLORS_BY_LORD[lord] ?? 'white';
 
 export default function Home() {
   const insets = useSafeAreaInsets();
@@ -25,20 +47,32 @@ export default function Home() {
 
   const [dasha, setDasha] = useState<DashaResponse | null>(null);
   const [yogas, setYogas] = useState<YogasResponse | null>(null);
+  const [panchang, setPanchang] = useState<PanchangResponse | null>(null);
   const [loadErr, setLoadErr] = useState<string | null>(null);
 
   useEffect(() => {
     if (!profile) return;
     let cancelled = false;
+    const today = new Date().toISOString().slice(0, 10);
     void (async () => {
       try {
-        const [d, y] = await Promise.all([api.dasha(profile.birth, 5), api.yogas(profile.birth)]);
+        const [d, y, pa] = await Promise.all([
+          api.dasha(profile.birth, 5),
+          api.yogas(profile.birth),
+          api.panchang({
+            date: today,
+            timezone: profile.birth.timezone ?? 'Asia/Kolkata',
+            latitude: profile.birth.latitude,
+            longitude: profile.birth.longitude,
+          }),
+        ]);
         if (!cancelled) {
           setDasha(d.data);
           setYogas(y.data);
+          setPanchang(pa.data);
         }
       } catch (e) {
-        if (!cancelled) setLoadErr('Could not load dasha/yogas — check your connection.');
+        if (!cancelled) setLoadErr('Could not load dasha/yogas/panchang — check your connection.');
       }
     })();
     return () => {
@@ -68,14 +102,23 @@ export default function Home() {
               {T.namaste}, <Text style={{ fontFamily: 'Spectral-SemiBold', color: colors.maroon }}>{profile.birth.name}</Text>
             </Text>
             <View style={s.brandWrap}>
-              <View style={s.logoSlot}>
-                <Text style={s.logoSlotText}>your{`\n`}logo</Text>
-              </View>
+              <Image
+                source={require('../../assets/brand/logo-mark.png')}
+                style={s.logoMark}
+                resizeMode="contain"
+              />
               <Text style={s.brand}>KundliKosh</Text>
               <Text style={s.brandHi}>कुंडलीकोश</Text>
               <View style={s.divider} />
             </View>
           </View>
+
+          {panchang && (
+            <>
+              <SectionTitle en="Today’s Panchang" hi="आज का पंचांग" />
+              <PanchangCard data={panchang} />
+            </>
+          )}
 
           <SectionTitle en="Your Patron" hi="आपके आराध्य" />
           <PatronDeityCard deity={chart.patron_deity} />
@@ -84,10 +127,10 @@ export default function Home() {
           <PaperCard inset={16}>
             <View style={{ alignItems: 'center' }}>
               <Text style={[s.omGlyph]}>ॐ</Text>
-              <Text style={s.mantraHi}>ॐ चन्द्राय नमः</Text>
-              <Text style={s.mantraTrans}>Om Chandraya Namaha · 108×</Text>
+              <Text style={s.mantraHi}>{mantraForLord(panchang?.weekday_lord ?? 'Moon').hi}</Text>
+              <Text style={s.mantraTrans}>{mantraForLord(panchang?.weekday_lord ?? 'Moon').trans} · 108×</Text>
               <Text style={s.mantraNote}>
-                Today is <Text style={s.bold}>Monday</Text> — Chandra's day. Chant 108 times in the morning for a peaceful mind. Wear something <Text style={s.bold}>white</Text> or pearl. Your Moon is exalted in {chart.moon_nakshatra}, so today's energy supports you specially.
+                Today is <Text style={s.bold}>{panchang?.weekday ?? 'Monday'}</Text> — {panchang?.weekday_lord ?? 'Moon'}'s day. Chant 108 times in the morning. Wear <Text style={s.bold}>{colorForLord(panchang?.weekday_lord ?? 'Moon')}</Text>. Your Moon is exalted in {chart.moon_nakshatra}.
               </Text>
             </View>
           </PaperCard>
@@ -181,23 +224,10 @@ const s = StyleSheet.create({
   header: { alignItems: 'center', paddingVertical: 4 },
   greet: { alignSelf: 'flex-end', color: colors.saffronDeep, fontFamily: 'Cormorant-Italic', fontSize: 13 },
   brandWrap: { alignItems: 'center', marginTop: 8 },
-  logoSlot: {
-    width: 64,
-    height: 64,
-    borderRadius: 32,
-    borderWidth: 1.5,
-    borderStyle: 'dashed',
-    borderColor: colors.saffron,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'rgba(255,248,231,0.4)',
-    marginBottom: 6,
-  },
-  logoSlotText: {
-    color: 'rgba(91,31,0,0.55)',
-    fontFamily: 'Cormorant-Italic',
-    fontSize: 11,
-    textAlign: 'center',
+  logoMark: {
+    width: 96,
+    height: 96,
+    marginBottom: 4,
   },
   brand: {
     ...text.brand,

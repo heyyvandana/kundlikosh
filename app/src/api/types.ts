@@ -124,3 +124,34 @@ export interface GunaMilanInput {
   bride: BirthInput;
   groom: BirthInput;
 }
+
+export interface PanchangInput {
+  date: string;
+  timezone: string;
+  latitude: number;
+  longitude: number;
+}
+
+export interface PanchangResponse {
+  date: string;
+  weekday: string;
+  weekday_hi: string;
+  weekday_lord: string;
+  sun_longitude: number;
+  moon_longitude: number;
+  tithi_index: number;
+  tithi_name: string;
+  tithi_name_hi: string;
+  paksha: string;
+  paksha_hi: string;
+  nakshatra_index: number;
+  nakshatra: string;
+  nakshatra_hi: string;
+  nakshatra_lord: string;
+  yoga_index: number;
+  yoga: string;
+  yoga_hi: string;
+  karana_index: number;
+  karana: string;
+  karana_hi: string;
+}

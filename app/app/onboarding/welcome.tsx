@@ -1,11 +1,10 @@
 // First screen — devotional welcome. Cosmic indigo background with constellation
 // pattern + saffron accents. CSS-only "human-made" feel: no AI raster art.
 import React from 'react';
-import { View, Text, StyleSheet, Pressable, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Pressable, ScrollView, Image } from 'react-native';
 import { router } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Svg, { Circle, G, Line, Path } from 'react-native-svg';
 import { colors } from '@/theme/colors';
 import { text } from '@/theme/typography';
 import { strings, useLocale } from '@/i18n';
@@ -34,49 +33,13 @@ export default function Welcome() {
           </Pressable>
         </View>
 
-        {/* Mandala-style decorative SVG */}
-        <View style={s.mandalaWrap}>
-          <Svg width={220} height={220} viewBox="0 0 220 220">
-            <G stroke={colors.gold} strokeWidth={0.8} fill="none" opacity={0.85}>
-              <Circle cx={110} cy={110} r={50} />
-              <Circle cx={110} cy={110} r={70} />
-              <Circle cx={110} cy={110} r={90} strokeDasharray="2 4" />
-            </G>
-            {/* 12 zodiac spoke marks */}
-            {Array.from({ length: 12 }).map((_, i) => {
-              const a = (i * 30 * Math.PI) / 180;
-              const r1 = 50;
-              const r2 = 90;
-              return (
-                <Line
-                  key={i}
-                  x1={110 + Math.cos(a) * r1}
-                  y1={110 + Math.sin(a) * r1}
-                  x2={110 + Math.cos(a) * r2}
-                  y2={110 + Math.sin(a) * r2}
-                  stroke={colors.gold}
-                  strokeWidth={0.8}
-                  opacity={0.6}
-                />
-              );
-            })}
-            {/* Sacred geometry petals */}
-            <G stroke={colors.saffron} strokeWidth={1} fill="none" opacity={0.9}>
-              {Array.from({ length: 8 }).map((_, i) => {
-                const a = (i * 45 * Math.PI) / 180;
-                return (
-                  <Path
-                    key={i}
-                    d={`M${110 + Math.cos(a) * 30} ${110 + Math.sin(a) * 30} Q${110} ${110} ${
-                      110 + Math.cos(a + 0.3) * 30
-                    } ${110 + Math.sin(a + 0.3) * 30}`}
-                  />
-                );
-              })}
-            </G>
-            {/* Center Om */}
-            <SvgOm cx={110} cy={110} />
-          </Svg>
+        {/* Hand-drawn mandala-in-hands logo */}
+        <View style={s.logoWrap}>
+          <Image
+            source={require('../../assets/brand/logo-mark.png')}
+            style={s.logo}
+            resizeMode="contain"
+          />
         </View>
 
         <Text style={s.brand}>KundliKosh</Text>
@@ -98,20 +61,6 @@ export default function Welcome() {
         <Text style={s.legal}>{strings[locale].legal.disclaimer}</Text>
       </ScrollView>
     </LinearGradient>
-  );
-}
-
-function SvgOm({ cx, cy }: { cx: number; cy: number }) {
-  // hand-drawn ॐ rendered as text via SVG to keep it crisp
-  return (
-    <G transform={`translate(${cx} ${cy})`}>
-      <Circle r={26} fill="rgba(232,197,71,0.15)" stroke={colors.gold} strokeWidth={1} />
-      {/* simple stylised glyph in saffron — SvgText omitted; use plain Path is overkill,
-          so we keep it minimal with overlapping circles for a yantra feel */}
-      <Circle r={18} fill="none" stroke={colors.saffron} strokeWidth={1.2} />
-      <Circle r={10} fill="none" stroke={colors.saffron} strokeWidth={0.8} />
-      <Circle r={3} fill={colors.goldBright} />
-    </G>
   );
 }
 
@@ -140,6 +89,8 @@ const s = StyleSheet.create({
     borderColor: colors.gold,
   },
   mandalaWrap: { alignItems: 'center', marginVertical: 12 },
+  logoWrap: { alignItems: 'center', marginTop: 4, marginBottom: 8 },
+  logo: { width: 220, height: 220 },
   brand: {
     color: colors.goldBright,
     ...text.brand,

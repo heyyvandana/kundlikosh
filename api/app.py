@@ -9,6 +9,7 @@ Endpoints:
     POST /yogas         — detected yogas
     POST /varga         — divisional charts (D9, D10, ...)
     POST /compatibility — ashtakoot guna milan
+    POST /panchang      — 5-limb Vedic calendar for any date+location
     GET  /health
 """
 
@@ -20,10 +21,13 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
+from datetime import date as date_cls
+
 from kundlikosh_engine import (
     chart_to_dict,
     compute_chart,
     compute_mahadashas,
+    compute_panchang,
     compute_varga,
     current_dasha,
     dasha_timeline,
@@ -120,6 +124,28 @@ def varga(payload: VargaInput):
         "lagna_sign_index": v.lagna_sign_index,
         "placements": v.placements,
     }
+
+
+class PanchangInput(BaseModel):
+    date: str = Field(..., description="YYYY-MM-DD; the local-civil date you want panchang for")
+    timezone: str = Field(default="Asia/Kolkata")
+    latitude: float = Field(..., ge=-90.0, le=90.0)
+    longitude: float = Field(..., ge=-180.0, le=180.0)
+
+
+@app.post("/panchang")
+def panchang(payload: PanchangInput):
+    try:
+        on = date_cls.fromisoformat(payload.date)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=f"invalid date: {e}")
+    p = compute_panchang(
+        on_date=on,
+        latitude=payload.latitude,
+        longitude=payload.longitude,
+        timezone_str=payload.timezone,
+    )
+    return p.to_dict()
 
 
 @app.post("/compatibility")

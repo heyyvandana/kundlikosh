@@ -24,6 +24,7 @@ from .compatibility import (
     guna_milan,
     manglik_status,
 )
+from .panchang import Panchang, compute_panchang
 
 __all__ = [
     "Chart",
@@ -42,6 +43,8 @@ __all__ = [
     "KootaResult",
     "guna_milan",
     "manglik_status",
+    "Panchang",
+    "compute_panchang",
 ]
 
 __version__ = "0.1.0"
