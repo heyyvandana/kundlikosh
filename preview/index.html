@@ -78,40 +78,56 @@
     margin: 8px -14px;
   }
 
-  /* Top bar */
+  /* Top bar — centered brand block */
   .topbar{
-    display:flex; align-items:center; justify-content:space-between;
-    padding: 4px 4px 10px;
+    text-align:center;
+    padding: 8px 4px 14px;
+    position:relative;
   }
-  .brand{
-    display:flex; align-items:center; gap:10px;
+  .greet-row{
+    text-align:right;
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic; font-size:13px;
+    color: var(--saffron-deep);
+    padding-right: 4px;
   }
-  .brand-mark{
-    width:42px; height:42px; flex-shrink:0;
-    background: radial-gradient(circle, var(--gold-bright) 30%, var(--saffron) 70%);
-    border-radius:50%;
-    display:grid; place-items:center;
-    color:var(--maroon);
-    font-family:'Tiro Devanagari Sanskrit', serif;
-    font-weight:700; font-size:24px;
-    box-shadow: 0 0 0 2px var(--maroon), 0 0 0 4px var(--gold);
+  .greet-row b{ font-style:normal; color: var(--maroon); }
+
+  .brand-center{
+    display:flex; flex-direction:column; align-items:center;
+    margin-top: 6px;
   }
   .brand-name{
     font-family:'Cormorant Garamond', serif; font-weight:700;
-    font-size:22px; line-height:1; color: var(--saffron-deep);
-    letter-spacing:.5px;
+    font-size:30px; line-height:1; color: var(--saffron-deep);
+    letter-spacing:1px;
+    text-shadow: 0 1px 0 rgba(255,255,255,.6);
   }
   .brand-sub{
     font-family:'Tiro Devanagari Sanskrit', serif;
-    font-size:14px; color: var(--maroon); margin-top:2px;
+    font-size:18px; color: var(--maroon); margin-top:4px;
+    letter-spacing: 1px;
   }
-  .greet{
-    font-family:'Cormorant Garamond', serif;
-    font-style:italic; font-size:14px;
-    color: var(--saffron-deep);
-    text-align:right;
+  .brand-divider{
+    margin: 8px 0 0;
+    width: 90px; height: 8px;
+    background-image:
+      radial-gradient(circle, var(--saffron) 30%, transparent 32%),
+      linear-gradient(90deg, transparent 0, var(--gold) 50%, transparent 100%);
+    background-size: 8px 8px, 100% 1.5px;
+    background-position: center, center;
+    background-repeat: no-repeat;
   }
-  .greet b{ display:block; font-style:normal; font-size:18px; color: var(--maroon); }
+  .logo-placeholder{
+    width:64px; height:64px; margin:0 auto 8px;
+    border-radius:50%;
+    border: 1.5px dashed var(--saffron);
+    display:grid; place-items:center;
+    color: rgba(91,31,0,.55);
+    font-family:'Cormorant Garamond', serif; font-style:italic;
+    font-size: 11px; line-height:1.15; text-align:center;
+    background: rgba(255,248,231,.4);
+  }
 
   /* Section titles */
   h2.section{
@@ -316,17 +332,14 @@
   <div class="stagenote">KundliKosh · Phase-1 visual preview · live engine data</div>
 
   <div class="phone" id="screen">
-    <!-- Top bar -->
+    <!-- Top bar — brand centered, custom logo slot above -->
     <div class="topbar">
-      <div class="brand">
-        <div class="brand-mark">ॐ</div>
-        <div>
-          <div class="brand-name">KundliKosh</div>
-          <div class="brand-sub">कुंडलीकोश</div>
-        </div>
-      </div>
-      <div class="greet">
-        Namaste<br><b>Vandana</b>
+      <div class="greet-row">Namaste, <b>Vandana</b></div>
+      <div class="brand-center">
+        <div class="logo-placeholder" title="Your custom logo will go here">your<br>logo</div>
+        <div class="brand-name">KundliKosh</div>
+        <div class="brand-sub">कुंडलीकोश</div>
+        <div class="brand-divider"></div>
       </div>
     </div>
 
