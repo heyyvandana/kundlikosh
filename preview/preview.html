@@ -1,0 +1,1263 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KundliKosh · कुंडलीकोश</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Tiro+Devanagari+Sanskrit:ital@0;1&family=Spectral:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ========================================================================
+     KundliKosh — Visual identity
+     Goal: human-made, hand-drawn devotional + cosmic feel.
+     No AI-generated raster art. CSS patterns + traditional motifs only.
+  ======================================================================== */
+  :root{
+    --saffron:        #C8501A;
+    --saffron-deep:   #8E2A0A;
+    --gold:           #C9A227;
+    --gold-bright:    #E8C547;
+    --indigo:         #1B1340;
+    --indigo-deep:    #0A0726;
+    --maroon:         #5B1F00;
+    --cream:          #F5E6CA;
+    --parchment:      #FBF3E2;
+    --offwhite:       #FFF8E7;
+    --green-tulasi:   #2F5D3F;
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:'Spectral', Georgia, serif;
+    color: var(--maroon);
+    background:
+      radial-gradient(circle at 20% 0%,  rgba(200,80,26,.20),  transparent 50%),
+      radial-gradient(circle at 90% 90%, rgba(201,162,39,.18), transparent 50%),
+      linear-gradient(160deg, var(--indigo-deep) 0%, var(--indigo) 35%, #2A1A4F 100%);
+    min-height: 100vh;
+    background-attachment: fixed;
+  }
+  /* faint kolam dots — pure CSS, no images */
+  body::before{
+    content:'';
+    position: fixed; inset:0; pointer-events:none;
+    background-image:
+      radial-gradient(circle at 50% 50%, rgba(232,197,71,.10) 1.2px, transparent 1.6px);
+    background-size: 28px 28px;
+    mask-image: linear-gradient(180deg, transparent 0%, black 18%, black 82%, transparent 100%);
+    z-index: 0;
+  }
+
+  .phone{
+    position: relative;
+    width: 100%; max-width: 430px;
+    margin: 24px auto 60px;
+    padding: 18px 14px 60px;
+    background:
+      linear-gradient(180deg, #FFF8E7 0%, #F4E5C2 100%);
+    border-radius: 32px;
+    box-shadow:
+      0 0 0 6px rgba(201,162,39,.5),
+      0 0 0 10px rgba(27,19,64,.85),
+      0 24px 50px rgba(0,0,0,.55);
+    overflow: hidden;
+    z-index: 2;
+  }
+
+  /* Madhubani-style decorative border — pure CSS triangles */
+  .border-pattern{
+    height: 14px;
+    background-image:
+      linear-gradient(45deg, var(--maroon) 25%, transparent 25%),
+      linear-gradient(-45deg, var(--maroon) 25%, transparent 25%);
+    background-size: 16px 14px;
+    background-position: 0 0, 8px 0;
+    background-repeat: repeat-x;
+    margin: 8px -14px;
+  }
+
+  /* Top bar */
+  .topbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 4px 4px 10px;
+  }
+  .brand{
+    display:flex; align-items:center; gap:10px;
+  }
+  .brand-mark{
+    width:42px; height:42px; flex-shrink:0;
+    background: radial-gradient(circle, var(--gold-bright) 30%, var(--saffron) 70%);
+    border-radius:50%;
+    display:grid; place-items:center;
+    color:var(--maroon);
+    font-family:'Tiro Devanagari Sanskrit', serif;
+    font-weight:700; font-size:24px;
+    box-shadow: 0 0 0 2px var(--maroon), 0 0 0 4px var(--gold);
+  }
+  .brand-name{
+    font-family:'Cormorant Garamond', serif; font-weight:700;
+    font-size:22px; line-height:1; color: var(--saffron-deep);
+    letter-spacing:.5px;
+  }
+  .brand-sub{
+    font-family:'Tiro Devanagari Sanskrit', serif;
+    font-size:14px; color: var(--maroon); margin-top:2px;
+  }
+  .greet{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic; font-size:14px;
+    color: var(--saffron-deep);
+    text-align:right;
+  }
+  .greet b{ display:block; font-style:normal; font-size:18px; color: var(--maroon); }
+
+  /* Section titles */
+  h2.section{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:600;
+    color: var(--saffron-deep);
+    font-size: 20px;
+    margin: 24px 4px 10px;
+    display:flex; align-items:center; gap:10px;
+  }
+  h2.section::before, h2.section::after{
+    content:''; flex:1; height:1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  /* Patron Deity Card */
+  .deity-card{
+    position:relative;
+    background:
+      linear-gradient(180deg, var(--parchment), var(--cream));
+    border-radius: 18px;
+    padding: 18px 18px 16px;
+    box-shadow: 0 2px 6px rgba(0,0,0,.15), inset 0 0 0 2px var(--gold);
+    overflow:hidden;
+  }
+  .deity-card::before, .deity-card::after{
+    content:''; position:absolute; inset:6px;
+    border: 1.5px solid var(--saffron);
+    border-radius: 14px;
+    pointer-events:none;
+  }
+  .deity-card::after{
+    inset: 10px;
+    border: 1px dashed rgba(91,31,0,.3);
+  }
+  .deity-svg{
+    width:100%; max-width:160px; margin:6px auto 8px; display:block;
+  }
+  .deity-name{
+    text-align:center;
+    font-family:'Cormorant Garamond', serif; font-weight:700;
+    font-size:28px; line-height:1.1;
+    color: var(--saffron-deep);
+    margin:8px 0 2px;
+    letter-spacing:.5px;
+  }
+  .deity-name-hi{
+    text-align:center;
+    font-family:'Tiro Devanagari Sanskrit', serif;
+    font-size:24px; color: var(--maroon);
+    margin-bottom:8px;
+  }
+  .deity-line{
+    text-align:center;
+    font-family:'Cormorant Garamond', serif;
+    font-style: italic; font-size:15px; line-height:1.5;
+    color: var(--maroon);
+    padding: 0 8px;
+  }
+  .deity-meta{
+    margin-top:12px;
+    display:flex; justify-content:space-around;
+    font-size:12px; color:var(--saffron-deep);
+    font-family:'Spectral', serif;
+  }
+  .deity-meta div{ text-align:center; }
+  .deity-meta span{ display:block; font-weight:600; color: var(--maroon); margin-top:2px; }
+
+  /* Kundli card */
+  .kundli-wrap{
+    background: var(--parchment);
+    border-radius: 16px;
+    padding: 14px 14px 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,.15), inset 0 0 0 2px var(--gold);
+  }
+  .kundli-head{
+    display:flex; justify-content:space-between; align-items:center;
+    margin-bottom: 6px;
+  }
+  .kundli-head h3{
+    margin:0; font-family:'Cormorant Garamond', serif;
+    font-size:18px; color: var(--saffron-deep);
+  }
+  .kundli-head small{ color:var(--maroon); font-size:12px; }
+
+  /* SVG Kundli */
+  svg.kundli{ width:100%; height:auto; display:block; background: var(--cream); border-radius:8px; }
+
+  /* Dasha card + planet rows + mantra */
+  .card{
+    background: linear-gradient(180deg, var(--parchment), var(--cream));
+    border-radius: 14px;
+    padding: 14px;
+    box-shadow: 0 2px 6px rgba(0,0,0,.12), inset 0 0 0 1.5px var(--gold);
+    margin-bottom: 12px;
+  }
+  .card h3{
+    margin:0 0 8px; font-family:'Cormorant Garamond', serif;
+    font-size:17px; color: var(--saffron-deep);
+    display:flex; align-items:center; gap:8px;
+  }
+  .card .hi{ font-family:'Tiro Devanagari Sanskrit', serif; color: var(--maroon); margin-left:auto; font-size:14px; }
+
+  .dasha-row{
+    display:flex; justify-content:space-between; align-items:center;
+    padding: 6px 0; border-bottom: 1px dotted rgba(91,31,0,.15);
+    font-size:13px;
+  }
+  .dasha-row:last-child{ border-bottom:none; }
+  .dasha-row .lord{ font-weight:600; color:var(--maroon); }
+  .dasha-row .dates{ font-size:11px; color: var(--saffron-deep); }
+
+  /* Planet table */
+  table.planets{ width:100%; border-collapse: collapse; font-size:12px; }
+  table.planets th{
+    text-align:left; padding:6px 4px; color: var(--saffron-deep);
+    font-family:'Cormorant Garamond', serif; font-weight:600;
+    border-bottom: 2px solid var(--gold);
+  }
+  table.planets td{
+    padding: 5px 4px; border-bottom: 1px dotted rgba(91,31,0,.15);
+  }
+  .pill{
+    display:inline-block; padding:1px 6px; border-radius: 20px;
+    font-size:10px; font-weight:600;
+  }
+  .pill.exalted{ background:#E8F5E8; color:#1F5C1F; }
+  .pill.debilitated{ background:#FCE9E9; color:#7E1D1D; }
+  .pill.own_sign{ background:#FFF1D6; color:#7A5210; }
+  .pill.neutral{ background: rgba(91,31,0,.06); color: var(--maroon); }
+  .pill.R{ background: var(--saffron); color:white; margin-left:4px; }
+
+  /* Mantra block */
+  .mantra-block{
+    text-align:center;
+    margin-top:6px;
+    padding: 10px 4px 4px;
+  }
+  .mantra-block .om{
+    font-family:'Tiro Devanagari Sanskrit', serif;
+    font-size: 56px; line-height:1;
+    color: var(--saffron);
+    text-shadow: 0 0 22px rgba(232,197,71,.45);
+  }
+  .mantra-line{
+    font-family:'Tiro Devanagari Sanskrit', serif;
+    font-size: 22px; color: var(--maroon);
+    margin-top: 6px;
+  }
+  .mantra-trans{
+    font-family:'Cormorant Garamond', serif;
+    font-style: italic; font-size:14px; color: var(--saffron-deep);
+    margin-top:4px;
+  }
+
+  .footer-vibes{
+    text-align:center; font-size:11px;
+    color: var(--saffron-deep); margin-top:18px;
+    font-family:'Cormorant Garamond', serif; font-style:italic;
+  }
+
+  /* Yoga chip */
+  .yoga{
+    display:inline-block; margin: 3px 4px 3px 0;
+    padding: 4px 9px;
+    background: linear-gradient(180deg, var(--gold-bright), var(--gold));
+    color: var(--maroon);
+    border-radius: 14px;
+    font-size:11px; font-weight:600;
+    box-shadow: inset 0 0 0 1px var(--maroon);
+  }
+  .yoga.dosha{ background: linear-gradient(180deg, #E0726E, #C8501A); color:white; }
+
+  /* Bottom nav stub */
+  .bottomnav{
+    position: sticky; bottom: 0;
+    margin: 16px -14px -60px;
+    padding: 12px 0 14px;
+    background: linear-gradient(0deg, var(--maroon), var(--saffron-deep));
+    color: var(--cream);
+    display:flex; justify-content: space-around;
+    font-family:'Cormorant Garamond', serif;
+    font-size: 12px;
+  }
+  .bottomnav .tab{
+    display:flex; flex-direction:column; align-items:center;
+    gap:2px; opacity:.65;
+  }
+  .bottomnav .tab.active{ opacity:1; color: var(--gold-bright); }
+  .bottomnav .tab .icon{ font-size:18px; }
+
+  /* Stage backdrop reveal note */
+  .stagenote{
+    position:absolute; top:14px; left:50%; transform:translateX(-50%);
+    color: var(--gold-bright); font-family:'Cormorant Garamond',serif;
+    font-style:italic; font-size: 13px;
+    text-shadow: 0 1px 4px rgba(0,0,0,.6);
+  }
+</style>
+</head>
+<body>
+  <div class="stagenote">KundliKosh · Phase-1 visual preview · live engine data</div>
+
+  <div class="phone" id="screen">
+    <!-- Top bar -->
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-mark">ॐ</div>
+        <div>
+          <div class="brand-name">KundliKosh</div>
+          <div class="brand-sub">कुंडलीकोश</div>
+        </div>
+      </div>
+      <div class="greet">
+        Namaste<br><b>Vandana</b>
+      </div>
+    </div>
+
+    <div class="border-pattern"></div>
+
+    <!-- Patron Deity Card -->
+    <h2 class="section">Your Patron · आपके आराध्य</h2>
+    <div class="deity-card">
+      <!-- Hand-drawn-style SVG illustration of Brahma — geometric, no AI art -->
+      <svg class="deity-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="Brahma">
+        <!-- halo / aureole -->
+        <defs>
+          <radialGradient id="halo" cx="50%" cy="45%" r="55%">
+            <stop offset="0%" stop-color="#FFE9A8"/>
+            <stop offset="60%" stop-color="#E8C547" stop-opacity=".6"/>
+            <stop offset="100%" stop-color="#C9A227" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <circle cx="100" cy="92" r="86" fill="url(#halo)"/>
+        <!-- mandala rays -->
+        <g stroke="#C9A227" stroke-width="1" fill="none" opacity=".55">
+          <circle cx="100" cy="92" r="78"/>
+          <circle cx="100" cy="92" r="68"/>
+          <g>
+            <path d="M100 14 L100 28"/>
+            <path d="M100 156 L100 170"/>
+            <path d="M22 92 L36 92"/>
+            <path d="M164 92 L178 92"/>
+            <path d="M44 36 L54 46"/>
+            <path d="M156 36 L146 46"/>
+            <path d="M44 148 L54 138"/>
+            <path d="M156 148 L146 138"/>
+          </g>
+        </g>
+
+        <!-- Lotus pedestal (4 petals) -->
+        <g fill="#F0B5B7" stroke="#8E2A0A" stroke-width="1.2">
+          <path d="M60 158 q40 -20 80 0 q-40 12 -80 0z"/>
+          <path d="M70 162 q30 -16 60 0 q-30 10 -60 0z"/>
+        </g>
+
+        <!-- Body / robe -->
+        <path d="M70 145 q30 -36 60 0 v8 h-60z" fill="#C8501A" stroke="#5B1F00" stroke-width="1.2"/>
+        <!-- Beard -->
+        <path d="M80 95 q20 36 40 0 q-12 16 -20 16 q-8 0 -20 -16z" fill="#FBF3E2" stroke="#5B1F00" stroke-width="1"/>
+
+        <!-- 4 faces — geometric simplification -->
+        <!-- center face (front) -->
+        <ellipse cx="100" cy="80" rx="18" ry="22" fill="#FFE0CC" stroke="#5B1F00" stroke-width="1.4"/>
+        <!-- side faces -->
+        <ellipse cx="74" cy="86" rx="11" ry="14" fill="#FFD6BB" stroke="#5B1F00" stroke-width="1"/>
+        <ellipse cx="126" cy="86" rx="11" ry="14" fill="#FFD6BB" stroke="#5B1F00" stroke-width="1"/>
+        <!-- top face hint -->
+        <ellipse cx="100" cy="58" rx="13" ry="11" fill="#FFD6BB" stroke="#5B1F00" stroke-width="1"/>
+
+        <!-- Eyes (front face) -->
+        <g fill="#1B1340">
+          <ellipse cx="93" cy="78" rx="2" ry="1.4"/>
+          <ellipse cx="107" cy="78" rx="2" ry="1.4"/>
+        </g>
+        <!-- Tilak / bindu -->
+        <circle cx="100" cy="68" r="2.2" fill="#C8501A"/>
+        <!-- Mouth -->
+        <path d="M94 88 q6 4 12 0" stroke="#5B1F00" stroke-width="1.2" fill="none"/>
+
+        <!-- Crown -->
+        <g fill="#C9A227" stroke="#5B1F00" stroke-width="1">
+          <path d="M82 60 L88 50 L94 58 L100 48 L106 58 L112 50 L118 60 z"/>
+          <circle cx="100" cy="46" r="2.4" fill="#C8501A"/>
+        </g>
+
+        <!-- Four arms holding symbols -->
+        <g stroke="#5B1F00" stroke-width="1.2" fill="#FFE0CC">
+          <path d="M82 110 q-20 6 -28 28"/>
+          <path d="M118 110 q20 6 28 28"/>
+          <path d="M82 122 q-12 14 -12 30"/>
+          <path d="M118 122 q12 14 12 30"/>
+        </g>
+
+        <!-- Symbols at hand-tips: Veda book, water-pot, mala, lotus -->
+        <!-- Veda (top-left) -->
+        <rect x="44" y="130" width="14" height="10" fill="#FBF3E2" stroke="#5B1F00"/>
+        <line x1="44" y1="135" x2="58" y2="135" stroke="#5B1F00"/>
+        <!-- Water pot kamandalu (top-right) -->
+        <ellipse cx="146" cy="138" rx="6" ry="7" fill="#C9A227" stroke="#5B1F00"/>
+        <rect x="143" y="128" width="6" height="4" fill="#C9A227" stroke="#5B1F00"/>
+        <!-- Mala (bottom-left) — beads -->
+        <g fill="#5B1F00">
+          <circle cx="62" cy="156" r="1.6"/><circle cx="66" cy="158" r="1.6"/>
+          <circle cx="70" cy="158" r="1.6"/><circle cx="74" cy="156" r="1.6"/>
+        </g>
+        <!-- Lotus flower (bottom-right) -->
+        <g fill="#F0B5B7" stroke="#8E2A0A" stroke-width="1">
+          <path d="M126 156 q4 -8 8 0 q-4 4 -8 0z"/>
+          <path d="M134 156 q4 -8 8 0 q-4 4 -8 0z"/>
+        </g>
+      </svg>
+
+      <div class="deity-name">Brahma</div>
+      <div class="deity-name-hi">ब्रह्मा</div>
+      <div class="deity-line">
+        “The cosmic creator. Born under <b>Rohini</b>, you carry his seed of creation —
+        creative, nurturing, quietly powerful.”
+      </div>
+      <div class="deity-meta">
+        <div>Nakshatra<span>Rohini · रोहिणी</span></div>
+        <div>Symbol<span>Banyan / Ox-cart</span></div>
+        <div>Lord<span>Chandra</span></div>
+      </div>
+    </div>
+
+    <!-- Today's mantra -->
+    <h2 class="section">Today's mantra · आज का मंत्र</h2>
+    <div class="card">
+      <div class="mantra-block">
+        <div class="om">ॐ</div>
+        <div class="mantra-line">ॐ चन्द्राय नमः</div>
+        <div class="mantra-trans">Om Chandraya Namaha · 108×</div>
+      </div>
+      <p style="font-size:12px; line-height:1.55; color:var(--maroon); margin: 8px 0 0;">
+        Today is <b>Monday — Chandra's day</b>. Chant 108 times in the morning for a
+        peaceful mind. Wear something <b>white</b> or pearl. Your Moon is exalted in
+        Rohini, so today's energy supports you specially.
+      </p>
+    </div>
+
+    <!-- Kundli (North Indian) -->
+    <h2 class="section">Janma Kundli · जन्म कुंडली</h2>
+    <div class="kundli-wrap">
+      <div class="kundli-head">
+        <h3>Lagna · Pisces (मीन)</h3>
+        <small>5°26' · Uttara Bhadrapada P1</small>
+      </div>
+      <svg class="kundli" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" id="kundli-svg">
+        <!-- Background frame -->
+        <rect x="6" y="6" width="388" height="388" fill="#FBF3E2" stroke="#5B1F00" stroke-width="2.5" rx="6"/>
+        <!-- Diagonals -->
+        <line x1="6"  y1="6"   x2="394" y2="394" stroke="#5B1F00" stroke-width="2"/>
+        <line x1="394" y1="6"  x2="6"   y2="394" stroke="#5B1F00" stroke-width="2"/>
+        <!-- Mid-cross (forms the inner diamond) -->
+        <line x1="200" y1="6"  x2="6"   y2="200" stroke="#5B1F00" stroke-width="2"/>
+        <line x1="200" y1="6"  x2="394" y2="200" stroke="#5B1F00" stroke-width="2"/>
+        <line x1="6"   y1="200" x2="200" y2="394" stroke="#5B1F00" stroke-width="2"/>
+        <line x1="394" y1="200" x2="200" y2="394" stroke="#5B1F00" stroke-width="2"/>
+
+        <!-- Sign-number labels (small, golden) -->
+        <g font-family="Cormorant Garamond" font-size="14" fill="#8E2A0A" font-style="italic" text-anchor="middle" id="signnums"></g>
+        <!-- Planets -->
+        <g font-family="Spectral" font-size="13" fill="#1B1340" font-weight="600" text-anchor="middle" id="planet-glyphs"></g>
+      </svg>
+
+      <p style="font-size:11px; color:var(--saffron-deep); text-align:center; margin: 8px 0 0; font-style:italic;">
+        North Indian style · 12 houses fixed, signs rotate from Lagna
+      </p>
+    </div>
+
+    <!-- Yogas + Doshas -->
+    <h2 class="section">Detected · आपके योग</h2>
+    <div class="card" id="yogas">
+      <!-- filled by JS -->
+    </div>
+
+    <!-- Planet positions table -->
+    <h2 class="section">Planets · ग्रह</h2>
+    <div class="card">
+      <table class="planets" id="planets-table">
+        <thead><tr><th>Graha</th><th>Sign</th><th>House</th><th>Nakshatra</th><th></th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <!-- Current dasha -->
+    <h2 class="section">Vimshottari Dasha · विंशोत्तरी दशा</h2>
+    <div class="card" id="dasha-card">
+      <h3>Currently running <span class="hi">वर्तमान दशा</span></h3>
+      <div id="dasha-current"></div>
+      <h3 style="margin-top:14px;">Next mahadashas <span class="hi">आने वाली दशाएं</span></h3>
+      <div id="dasha-next"></div>
+    </div>
+
+    <div class="footer-vibes">
+      Made with love · authentic Lahiri sidereal · 100% real, 0% template
+    </div>
+
+    <!-- Bottom nav stub (visual only) -->
+    <div class="bottomnav">
+      <div class="tab active"><div class="icon">🏠</div>Home</div>
+      <div class="tab"><div class="icon">🪐</div>Kundli</div>
+      <div class="tab"><div class="icon">💞</div>Match</div>
+      <div class="tab"><div class="icon">📿</div>Devalok</div>
+      <div class="tab"><div class="icon">🔮</div>Ask</div>
+    </div>
+  </div>
+
+<script>
+// ===== Live engine data injected =====
+const DATA = {
+  "chart": {
+    "name": "Vandana",
+    "birth_dt_utc": "2003-12-08T08:00:00+00:00",
+    "birth_dt_local": "2003-12-08T13:30:00+05:30",
+    "timezone": "Asia/Kolkata",
+    "latitude": 21.1702,
+    "longitude": 72.8311,
+    "ayanamsa": 23.91204407111701,
+    "lagna_longitude": 335.4358023724495,
+    "lagna_sign": "Pisces",
+    "lagna_sign_hi": "मीन",
+    "lagna_sign_index": 11,
+    "lagna_degree_in_sign": 5.435802372449473,
+    "lagna_nakshatra": "Uttara Bhadrapada",
+    "lagna_pada": 1,
+    "moon_sign": "Taurus",
+    "moon_sign_hi": "वृषभ",
+    "moon_nakshatra": "Rohini",
+    "moon_nakshatra_hi": "रोहिणी",
+    "moon_nakshatra_lord": "Moon",
+    "moon_pada": 2,
+    "sun_sign": "Scorpio",
+    "patron_deity": {
+      "nakshatra": "Rohini",
+      "nakshatra_hi": "रोहिणी",
+      "deity": "Brahma",
+      "deity_hi": "ब्रह्मा",
+      "symbol": "Ox-cart / Banyan",
+      "lord": "Moon"
+    },
+    "planets": [
+      {
+        "name": "Sun",
+        "name_hi": "सूर्य",
+        "longitude": 231.89175594619113,
+        "sign": "Scorpio",
+        "sign_hi": "वृश्चिक",
+        "sign_index": 7,
+        "degree_in_sign": 21.891755946191125,
+        "house": 9,
+        "nakshatra": "Jyeshtha",
+        "nakshatra_hi": "ज्येष्ठा",
+        "nakshatra_lord": "Mercury",
+        "nakshatra_deity": "Indra",
+        "nakshatra_deity_hi": "इन्द्र",
+        "pada": 2,
+        "retrograde": false,
+        "dignity": "neutral"
+      },
+      {
+        "name": "Moon",
+        "name_hi": "चन्द्र",
+        "longitude": 46.20568158034686,
+        "sign": "Taurus",
+        "sign_hi": "वृषभ",
+        "sign_index": 1,
+        "degree_in_sign": 16.205681580346862,
+        "house": 3,
+        "nakshatra": "Rohini",
+        "nakshatra_hi": "रोहिणी",
+        "nakshatra_lord": "Moon",
+        "nakshatra_deity": "Brahma",
+        "nakshatra_deity_hi": "ब्रह्मा",
+        "pada": 2,
+        "retrograde": false,
+        "dignity": "exalted"
+      },
+      {
+        "name": "Mars",
+        "name_hi": "मंगल",
+        "longitude": 331.4150999610296,
+        "sign": "Pisces",
+        "sign_hi": "मीन",
+        "sign_index": 11,
+        "degree_in_sign": 1.4150999610296253,
+        "house": 1,
+        "nakshatra": "Purva Bhadrapada",
+        "nakshatra_hi": "पूर्व भाद्रपद",
+        "nakshatra_lord": "Jupiter",
+        "nakshatra_deity": "Aja Ekapada",
+        "nakshatra_deity_hi": "अज एकपाद",
+        "pada": 4,
+        "retrograde": false,
+        "dignity": "neutral"
+      },
+      {
+        "name": "Mercury",
+        "name_hi": "बुध",
+        "longitude": 252.6983897617461,
+        "sign": "Sagittarius",
+        "sign_hi": "धनु",
+        "sign_index": 8,
+        "degree_in_sign": 12.698389761746114,
+        "house": 10,
+        "nakshatra": "Mula",
+        "nakshatra_hi": "मूल",
+        "nakshatra_lord": "Ketu",
+        "nakshatra_deity": "Nirriti",
+        "nakshatra_deity_hi": "निरृति",
+        "pada": 4,
+        "retrograde": false,
+        "dignity": "neutral"
+      },
+      {
+        "name": "Jupiter",
+        "name_hi": "गुरु",
+        "longitude": 143.8819868519855,
+        "sign": "Leo",
+        "sign_hi": "सिंह",
+        "sign_index": 4,
+        "degree_in_sign": 23.881986851985488,
+        "house": 6,
+        "nakshatra": "Purva Phalguni",
+        "nakshatra_hi": "पूर्वा फाल्गुनी",
+        "nakshatra_lord": "Venus",
+        "nakshatra_deity": "Bhaga",
+        "nakshatra_deity_hi": "भग",
+        "pada": 4,
+        "retrograde": false,
+        "dignity": "neutral"
+      },
+      {
+        "name": "Venus",
+        "name_hi": "शुक्र",
+        "longitude": 260.08941450964613,
+        "sign": "Sagittarius",
+        "sign_hi": "धनु",
+        "sign_index": 8,
+        "degree_in_sign": 20.089414509646133,
+        "house": 10,
+        "nakshatra": "Purva Ashadha",
+        "nakshatra_hi": "पूर्वाषाढा",
+        "nakshatra_lord": "Venus",
+        "nakshatra_deity": "Apas",
+        "nakshatra_deity_hi": "अप्",
+        "pada": 3,
+        "retrograde": false,
+        "dignity": "neutral"
+      },
+      {
+        "name": "Saturn",
+        "name_hi": "शनि",
+        "longitude": 77.69543888793683,
+        "sign": "Gemini",
+        "sign_hi": "मिथुन",
+        "sign_index": 2,
+        "degree_in_sign": 17.69543888793683,
+        "house": 4,
+        "nakshatra": "Ardra",
+        "nakshatra_hi": "आर्द्रा",
+        "nakshatra_lord": "Rahu",
+        "nakshatra_deity": "Rudra",
+        "nakshatra_deity_hi": "रुद्र",
+        "pada": 4,
+        "retrograde": true,
+        "dignity": "neutral"
+      },
+      {
+        "name": "Rahu",
+        "name_hi": "राहु",
+        "longitude": 26.50821940825836,
+        "sign": "Aries",
+        "sign_hi": "मेष",
+        "sign_index": 0,
+        "degree_in_sign": 26.50821940825836,
+        "house": 2,
+        "nakshatra": "Bharani",
+        "nakshatra_hi": "भरणी",
+        "nakshatra_lord": "Venus",
+        "nakshatra_deity": "Yama",
+        "nakshatra_deity_hi": "यम",
+        "pada": 4,
+        "retrograde": false,
+        "dignity": "neutral"
+      },
+      {
+        "name": "Ketu",
+        "name_hi": "केतु",
+        "longitude": 206.50821940825836,
+        "sign": "Libra",
+        "sign_hi": "तुला",
+        "sign_index": 6,
+        "degree_in_sign": 26.508219408258356,
+        "house": 8,
+        "nakshatra": "Vishakha",
+        "nakshatra_hi": "विशाखा",
+        "nakshatra_lord": "Jupiter",
+        "nakshatra_deity": "Indra-Agni",
+        "nakshatra_deity_hi": "इन्द्र-अग्नि",
+        "pada": 2,
+        "retrograde": false,
+        "dignity": "neutral"
+      }
+    ]
+  },
+  "current_dasha": {
+    "mahadasha": {
+      "lord": "Rahu",
+      "start": "2016-04-12",
+      "end": "2034-04-12",
+      "duration_years": 18
+    },
+    "antardasha": {
+      "lord": "Mercury",
+      "start": "2024-03-25",
+      "end": "2026-10-12",
+      "duration_years": 2.55
+    }
+  },
+  "dasha_timeline": [
+    {
+      "lord": "Moon",
+      "start": "2003-12-08",
+      "end": "2009-04-12",
+      "duration_years": 5.35,
+      "antardashas": [
+        {
+          "lord": "Moon",
+          "start": "2003-12-08",
+          "end": "2004-05-19"
+        },
+        {
+          "lord": "Mars",
+          "start": "2004-05-19",
+          "end": "2004-09-09"
+        },
+        {
+          "lord": "Rahu",
+          "start": "2004-09-09",
+          "end": "2005-06-29"
+        },
+        {
+          "lord": "Jupiter",
+          "start": "2005-06-29",
+          "end": "2006-03-17"
+        },
+        {
+          "lord": "Saturn",
+          "start": "2006-03-17",
+          "end": "2007-01-20"
+        },
+        {
+          "lord": "Mercury",
+          "start": "2007-01-20",
+          "end": "2007-10-23"
+        },
+        {
+          "lord": "Ketu",
+          "start": "2007-10-23",
+          "end": "2008-02-14"
+        },
+        {
+          "lord": "Venus",
+          "start": "2008-02-14",
+          "end": "2009-01-05"
+        },
+        {
+          "lord": "Sun",
+          "start": "2009-01-05",
+          "end": "2009-04-12"
+        }
+      ]
+    },
+    {
+      "lord": "Mars",
+      "start": "2009-04-12",
+      "end": "2016-04-12",
+      "duration_years": 7,
+      "antardashas": [
+        {
+          "lord": "Mars",
+          "start": "2009-04-12",
+          "end": "2009-09-08"
+        },
+        {
+          "lord": "Rahu",
+          "start": "2009-09-08",
+          "end": "2010-09-27"
+        },
+        {
+          "lord": "Jupiter",
+          "start": "2010-09-27",
+          "end": "2011-09-03"
+        },
+        {
+          "lord": "Saturn",
+          "start": "2011-09-03",
+          "end": "2012-10-12"
+        },
+        {
+          "lord": "Mercury",
+          "start": "2012-10-12",
+          "end": "2013-10-09"
+        },
+        {
+          "lord": "Ketu",
+          "start": "2013-10-09",
+          "end": "2014-03-07"
+        },
+        {
+          "lord": "Venus",
+          "start": "2014-03-07",
+          "end": "2015-05-07"
+        },
+        {
+          "lord": "Sun",
+          "start": "2015-05-07",
+          "end": "2015-09-12"
+        },
+        {
+          "lord": "Moon",
+          "start": "2015-09-12",
+          "end": "2016-04-12"
+        }
+      ]
+    },
+    {
+      "lord": "Rahu",
+      "start": "2016-04-12",
+      "end": "2034-04-12",
+      "duration_years": 18,
+      "antardashas": [
+        {
+          "lord": "Rahu",
+          "start": "2016-04-12",
+          "end": "2018-12-24"
+        },
+        {
+          "lord": "Jupiter",
+          "start": "2018-12-24",
+          "end": "2021-05-19"
+        },
+        {
+          "lord": "Saturn",
+          "start": "2021-05-19",
+          "end": "2024-03-25"
+        },
+        {
+          "lord": "Mercury",
+          "start": "2024-03-25",
+          "end": "2026-10-12"
+        },
+        {
+          "lord": "Ketu",
+          "start": "2026-10-12",
+          "end": "2027-10-31"
+        },
+        {
+          "lord": "Venus",
+          "start": "2027-10-31",
+          "end": "2030-10-30"
+        },
+        {
+          "lord": "Sun",
+          "start": "2030-10-30",
+          "end": "2031-09-24"
+        },
+        {
+          "lord": "Moon",
+          "start": "2031-09-24",
+          "end": "2033-03-25"
+        },
+        {
+          "lord": "Mars",
+          "start": "2033-03-25",
+          "end": "2034-04-12"
+        }
+      ]
+    },
+    {
+      "lord": "Jupiter",
+      "start": "2034-04-12",
+      "end": "2050-04-12",
+      "duration_years": 16,
+      "antardashas": [
+        {
+          "lord": "Jupiter",
+          "start": "2034-04-12",
+          "end": "2036-05-31"
+        },
+        {
+          "lord": "Saturn",
+          "start": "2036-05-31",
+          "end": "2038-12-12"
+        },
+        {
+          "lord": "Mercury",
+          "start": "2038-12-12",
+          "end": "2041-03-19"
+        },
+        {
+          "lord": "Ketu",
+          "start": "2041-03-19",
+          "end": "2042-02-23"
+        },
+        {
+          "lord": "Venus",
+          "start": "2042-02-23",
+          "end": "2044-10-24"
+        },
+        {
+          "lord": "Sun",
+          "start": "2044-10-24",
+          "end": "2045-08-12"
+        },
+        {
+          "lord": "Moon",
+          "start": "2045-08-12",
+          "end": "2046-12-12"
+        },
+        {
+          "lord": "Mars",
+          "start": "2046-12-12",
+          "end": "2047-11-18"
+        },
+        {
+          "lord": "Rahu",
+          "start": "2047-11-18",
+          "end": "2050-04-12"
+        }
+      ]
+    }
+  ],
+  "yogas": [
+    {
+      "name": "Gajakesari Yoga",
+      "name_hi": "गजकेसरी योग",
+      "category": "auspicious",
+      "description": "Moon and Jupiter in mutual kendra (1/4/7/10) — gives intelligence, dignity, eloquence, lasting respect."
+    },
+    {
+      "name": "Mangal Dosha",
+      "name_hi": "मंगल दोष",
+      "category": "dosha",
+      "description": "Mars in marriage-sensitive house from Lagna, Venus. Standard remedies recommended.",
+      "is_cancelled": false
+    }
+  ],
+  "d9": {
+    "name": "D9 Navamsa",
+    "lagna": "Leo",
+    "placements": [
+      {
+        "name": "Sun",
+        "name_hi": "सूर्य",
+        "sign": "Capricorn",
+        "sign_hi": "मकर",
+        "sign_index": 9,
+        "house": 6,
+        "retrograde": false
+      },
+      {
+        "name": "Moon",
+        "name_hi": "चन्द्र",
+        "sign": "Taurus",
+        "sign_hi": "वृषभ",
+        "sign_index": 1,
+        "house": 10,
+        "retrograde": false
+      },
+      {
+        "name": "Mars",
+        "name_hi": "मंगल",
+        "sign": "Cancer",
+        "sign_hi": "कर्क",
+        "sign_index": 3,
+        "house": 12,
+        "retrograde": false
+      },
+      {
+        "name": "Mercury",
+        "name_hi": "बुध",
+        "sign": "Cancer",
+        "sign_hi": "कर्क",
+        "sign_index": 3,
+        "house": 12,
+        "retrograde": false
+      },
+      {
+        "name": "Jupiter",
+        "name_hi": "गुरु",
+        "sign": "Scorpio",
+        "sign_hi": "वृश्चिक",
+        "sign_index": 7,
+        "house": 4,
+        "retrograde": false
+      },
+      {
+        "name": "Venus",
+        "name_hi": "शुक्र",
+        "sign": "Libra",
+        "sign_hi": "तुला",
+        "sign_index": 6,
+        "house": 3,
+        "retrograde": false
+      },
+      {
+        "name": "Saturn",
+        "name_hi": "शनि",
+        "sign": "Pisces",
+        "sign_hi": "मीन",
+        "sign_index": 11,
+        "house": 8,
+        "retrograde": true
+      },
+      {
+        "name": "Rahu",
+        "name_hi": "राहु",
+        "sign": "Scorpio",
+        "sign_hi": "वृश्चिक",
+        "sign_index": 7,
+        "house": 4,
+        "retrograde": false
+      },
+      {
+        "name": "Ketu",
+        "name_hi": "केतु",
+        "sign": "Taurus",
+        "sign_hi": "वृषभ",
+        "sign_index": 1,
+        "house": 10,
+        "retrograde": false
+      }
+    ]
+  },
+  "d10": {
+    "name": "D10 Dashamsa",
+    "lagna": "Sagittarius",
+    "placements": [
+      {
+        "name": "Sun",
+        "name_hi": "सूर्य",
+        "sign": "Aquarius",
+        "sign_hi": "कुम्भ",
+        "sign_index": 10,
+        "house": 3,
+        "retrograde": false
+      },
+      {
+        "name": "Moon",
+        "name_hi": "चन्द्र",
+        "sign": "Gemini",
+        "sign_hi": "मिथुन",
+        "sign_index": 2,
+        "house": 7,
+        "retrograde": false
+      },
+      {
+        "name": "Mars",
+        "name_hi": "मंगल",
+        "sign": "Scorpio",
+        "sign_hi": "वृश्चिक",
+        "sign_index": 7,
+        "house": 12,
+        "retrograde": false
+      },
+      {
+        "name": "Mercury",
+        "name_hi": "बुध",
+        "sign": "Aries",
+        "sign_hi": "मेष",
+        "sign_index": 0,
+        "house": 5,
+        "retrograde": false
+      },
+      {
+        "name": "Jupiter",
+        "name_hi": "गुरु",
+        "sign": "Pisces",
+        "sign_hi": "मीन",
+        "sign_index": 11,
+        "house": 4,
+        "retrograde": false
+      },
+      {
+        "name": "Venus",
+        "name_hi": "शुक्र",
+        "sign": "Gemini",
+        "sign_hi": "मिथुन",
+        "sign_index": 2,
+        "house": 7,
+        "retrograde": false
+      },
+      {
+        "name": "Saturn",
+        "name_hi": "शनि",
+        "sign": "Scorpio",
+        "sign_hi": "वृश्चिक",
+        "sign_index": 7,
+        "house": 12,
+        "retrograde": true
+      },
+      {
+        "name": "Rahu",
+        "name_hi": "राहु",
+        "sign": "Sagittarius",
+        "sign_hi": "धनु",
+        "sign_index": 8,
+        "house": 1,
+        "retrograde": false
+      },
+      {
+        "name": "Ketu",
+        "name_hi": "केतु",
+        "sign": "Gemini",
+        "sign_hi": "मिथुन",
+        "sign_index": 2,
+        "house": 7,
+        "retrograde": false
+      }
+    ]
+  }
+};
+
+// House centers for North Indian Kundli (12 houses fixed positions)
+const HOUSE_XY = {
+  1:  [200,  90],
+  2:  [105,  50],
+  3:  [50,  100],
+  4:  [105, 200],
+  5:  [50,  300],
+  6:  [105, 350],
+  7:  [200, 295],
+  8:  [295, 350],
+  9:  [350, 300],
+  10: [295, 200],
+  11: [350, 100],
+  12: [295,  50],
+};
+
+const PLANET_GLYPH = {
+  Sun:'Su', Moon:'Mo', Mars:'Ma', Mercury:'Me', Jupiter:'Ju',
+  Venus:'Ve', Saturn:'Sa', Rahu:'Ra', Ketu:'Ke'
+};
+
+function signNumberFromLagna(lagnaIdx, houseNumber){
+  // House 1 = lagna sign; subsequent houses go +1 sign each.
+  return ((lagnaIdx + (houseNumber - 1)) % 12) + 1; // 1..12 sign number
+}
+
+// --- Render sign numbers on the kundli ---
+const signGroup = document.getElementById('signnums');
+const lagnaIdx = DATA.chart.lagna_sign_index;
+for (let h = 1; h <= 12; h++){
+  const [x, y] = HOUSE_XY[h];
+  const signNum = signNumberFromLagna(lagnaIdx, h);
+  const t = document.createElementNS('http://www.w3.org/2000/svg','text');
+  t.setAttribute('x', x);
+  t.setAttribute('y', y - 8);
+  t.textContent = signNum;
+  signGroup.appendChild(t);
+}
+
+// --- Render planets ---
+const planetsByHouse = {};
+DATA.chart.planets.forEach(p => {
+  if (!planetsByHouse[p.house]) planetsByHouse[p.house] = [];
+  planetsByHouse[p.house].push(p);
+});
+const planetGroup = document.getElementById('planet-glyphs');
+for (const h of Object.keys(planetsByHouse)){
+  const [x, y] = HOUSE_XY[h];
+  const list = planetsByHouse[h];
+  list.forEach((pl, i) => {
+    const t = document.createElementNS('http://www.w3.org/2000/svg','text');
+    t.setAttribute('x', x);
+    t.setAttribute('y', y + 10 + (i * 16));
+    t.textContent = PLANET_GLYPH[pl.name] + (pl.retrograde ? '↺' : '');
+    if (pl.dignity === 'exalted') t.setAttribute('fill', '#1F5C1F');
+    if (pl.dignity === 'debilitated') t.setAttribute('fill', '#7E1D1D');
+    if (pl.dignity === 'own_sign') t.setAttribute('fill', '#7A5210');
+    planetGroup.appendChild(t);
+  });
+}
+
+// --- Yogas chips ---
+const yogaWrap = document.getElementById('yogas');
+DATA.yogas.forEach(y => {
+  const span = document.createElement('span');
+  span.className = 'yoga' + (y.category === 'dosha' ? ' dosha' : '');
+  span.textContent = y.name + (y.name_hi ? '  ·  ' + y.name_hi : '');
+  span.title = y.description || '';
+  yogaWrap.appendChild(span);
+});
+if (!DATA.yogas.length) {
+  yogaWrap.innerHTML = '<small>No yogas detected by current ruleset.</small>';
+}
+
+// --- Planets table ---
+const tbody = document.querySelector('#planets-table tbody');
+DATA.chart.planets.forEach(p => {
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><b>${p.name}</b><br><small style="color:var(--saffron-deep)">${p.name_hi}</small></td>
+    <td>${p.sign}<br><small style="color:var(--saffron-deep)">${p.sign_hi}</small></td>
+    <td>${p.house}</td>
+    <td>${p.nakshatra}<br><small>P${p.pada}</small></td>
+    <td>
+      <span class="pill ${p.dignity}">${p.dignity.replace('_',' ')}</span>
+      ${p.retrograde ? '<span class="pill R">R</span>' : ''}
+    </td>`;
+  tbody.appendChild(tr);
+});
+
+// --- Current dasha ---
+const cd = DATA.current_dasha;
+if (cd && cd.mahadasha) {
+  document.getElementById('dasha-current').innerHTML = `
+    <div class="dasha-row">
+      <div><span class="lord">${cd.mahadasha.lord}</span> Mahadasha
+        <div class="dates">${cd.mahadasha.start} → ${cd.mahadasha.end}</div></div>
+      <div style="text-align:right;">${cd.mahadasha.duration_years}<small> yr</small></div>
+    </div>` +
+    (cd.antardasha ? `
+    <div class="dasha-row">
+      <div><span class="lord">${cd.antardasha.lord}</span> Antardasha
+        <div class="dates">${cd.antardasha.start} → ${cd.antardasha.end}</div></div>
+      <div></div>
+    </div>` : '');
+}
+
+// --- Next mahadashas (skip past ones) ---
+const nextWrap = document.getElementById('dasha-next');
+const todayISO = new Date().toISOString().slice(0,10);
+const upcoming = DATA.dasha_timeline.filter(m => m.end >= todayISO).slice(0,3);
+upcoming.forEach(m => {
+  const div = document.createElement('div');
+  div.className = 'dasha-row';
+  div.innerHTML = `
+    <div><span class="lord">${m.lord}</span>
+      <div class="dates">${m.start} → ${m.end}</div></div>
+    <div style="text-align:right;">${m.duration_years}<small> yr</small></div>`;
+  nextWrap.appendChild(div);
+});
+</script>
+</body>
+</html>

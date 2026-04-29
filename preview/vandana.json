@@ -1,0 +1,614 @@
+{
+  "chart": {
+    "name": "Vandana",
+    "birth_dt_utc": "2003-12-08T08:00:00+00:00",
+    "birth_dt_local": "2003-12-08T13:30:00+05:30",
+    "timezone": "Asia/Kolkata",
+    "latitude": 21.1702,
+    "longitude": 72.8311,
+    "ayanamsa": 23.91204407111701,
+    "lagna_longitude": 335.4358023724495,
+    "lagna_sign": "Pisces",
+    "lagna_sign_hi": "मीन",
+    "lagna_sign_index": 11,
+    "lagna_degree_in_sign": 5.435802372449473,
+    "lagna_nakshatra": "Uttara Bhadrapada",
+    "lagna_pada": 1,
+    "moon_sign": "Taurus",
+    "moon_sign_hi": "वृषभ",
+    "moon_nakshatra": "Rohini",
+    "moon_nakshatra_hi": "रोहिणी",
+    "moon_nakshatra_lord": "Moon",
+    "moon_pada": 2,
+    "sun_sign": "Scorpio",
+    "patron_deity": {
+      "nakshatra": "Rohini",
+      "nakshatra_hi": "रोहिणी",
+      "deity": "Brahma",
+      "deity_hi": "ब्रह्मा",
+      "symbol": "Ox-cart / Banyan",
+      "lord": "Moon"
+    },
+    "planets": [
+      {
+        "name": "Sun",
+        "name_hi": "सूर्य",
+        "longitude": 231.89175594619113,
+        "sign": "Scorpio",
+        "sign_hi": "वृश्चिक",
+        "sign_index": 7,
+        "degree_in_sign": 21.891755946191125,
+        "house": 9,
+        "nakshatra": "Jyeshtha",
+        "nakshatra_hi": "ज्येष्ठा",
+        "nakshatra_lord": "Mercury",
+        "nakshatra_deity": "Indra",
+        "nakshatra_deity_hi": "इन्द्र",
+        "pada": 2,
+        "retrograde": false,
+        "dignity": "neutral"
+      },
+      {
+        "name": "Moon",
+        "name_hi": "चन्द्र",
+        "longitude": 46.20568158034686,
+        "sign": "Taurus",
+        "sign_hi": "वृषभ",
+        "sign_index": 1,
+        "degree_in_sign": 16.205681580346862,
+        "house": 3,
+        "nakshatra": "Rohini",
+        "nakshatra_hi": "रोहिणी",
+        "nakshatra_lord": "Moon",
+        "nakshatra_deity": "Brahma",
+        "nakshatra_deity_hi": "ब्रह्मा",
+        "pada": 2,
+        "retrograde": false,
+        "dignity": "exalted"
+      },
+      {
+        "name": "Mars",
+        "name_hi": "मंगल",
+        "longitude": 331.4150999610296,
+        "sign": "Pisces",
+        "sign_hi": "मीन",
+        "sign_index": 11,
+        "degree_in_sign": 1.4150999610296253,
+        "house": 1,
+        "nakshatra": "Purva Bhadrapada",
+        "nakshatra_hi": "पूर्व भाद्रपद",
+        "nakshatra_lord": "Jupiter",
+        "nakshatra_deity": "Aja Ekapada",
+        "nakshatra_deity_hi": "अज एकपाद",
+        "pada": 4,
+        "retrograde": false,
+        "dignity": "neutral"
+      },
+      {
+        "name": "Mercury",
+        "name_hi": "बुध",
+        "longitude": 252.6983897617461,
+        "sign": "Sagittarius",
+        "sign_hi": "धनु",
+        "sign_index": 8,
+        "degree_in_sign": 12.698389761746114,
+        "house": 10,
+        "nakshatra": "Mula",
+        "nakshatra_hi": "मूल",
+        "nakshatra_lord": "Ketu",
+        "nakshatra_deity": "Nirriti",
+        "nakshatra_deity_hi": "निरृति",
+        "pada": 4,
+        "retrograde": false,
+        "dignity": "neutral"
+      },
+      {
+        "name": "Jupiter",
+        "name_hi": "गुरु",
+        "longitude": 143.8819868519855,
+        "sign": "Leo",
+        "sign_hi": "सिंह",
+        "sign_index": 4,
+        "degree_in_sign": 23.881986851985488,
+        "house": 6,
+        "nakshatra": "Purva Phalguni",
+        "nakshatra_hi": "पूर्वा फाल्गुनी",
+        "nakshatra_lord": "Venus",
+        "nakshatra_deity": "Bhaga",
+        "nakshatra_deity_hi": "भग",
+        "pada": 4,
+        "retrograde": false,
+        "dignity": "neutral"
+      },
+      {
+        "name": "Venus",
+        "name_hi": "शुक्र",
+        "longitude": 260.08941450964613,
+        "sign": "Sagittarius",
+        "sign_hi": "धनु",
+        "sign_index": 8,
+        "degree_in_sign": 20.089414509646133,
+        "house": 10,
+        "nakshatra": "Purva Ashadha",
+        "nakshatra_hi": "पूर्वाषाढा",
+        "nakshatra_lord": "Venus",
+        "nakshatra_deity": "Apas",
+        "nakshatra_deity_hi": "अप्",
+        "pada": 3,
+        "retrograde": false,
+        "dignity": "neutral"
+      },
+      {
+        "name": "Saturn",
+        "name_hi": "शनि",
+        "longitude": 77.69543888793683,
+        "sign": "Gemini",
+        "sign_hi": "मिथुन",
+        "sign_index": 2,
+        "degree_in_sign": 17.69543888793683,
+        "house": 4,
+        "nakshatra": "Ardra",
+        "nakshatra_hi": "आर्द्रा",
+        "nakshatra_lord": "Rahu",
+        "nakshatra_deity": "Rudra",
+        "nakshatra_deity_hi": "रुद्र",
+        "pada": 4,
+        "retrograde": true,
+        "dignity": "neutral"
+      },
+      {
+        "name": "Rahu",
+        "name_hi": "राहु",
+        "longitude": 26.50821940825836,
+        "sign": "Aries",
+        "sign_hi": "मेष",
+        "sign_index": 0,
+        "degree_in_sign": 26.50821940825836,
+        "house": 2,
+        "nakshatra": "Bharani",
+        "nakshatra_hi": "भरणी",
+        "nakshatra_lord": "Venus",
+        "nakshatra_deity": "Yama",
+        "nakshatra_deity_hi": "यम",
+        "pada": 4,
+        "retrograde": false,
+        "dignity": "neutral"
+      },
+      {
+        "name": "Ketu",
+        "name_hi": "केतु",
+        "longitude": 206.50821940825836,
+        "sign": "Libra",
+        "sign_hi": "तुला",
+        "sign_index": 6,
+        "degree_in_sign": 26.508219408258356,
+        "house": 8,
+        "nakshatra": "Vishakha",
+        "nakshatra_hi": "विशाखा",
+        "nakshatra_lord": "Jupiter",
+        "nakshatra_deity": "Indra-Agni",
+        "nakshatra_deity_hi": "इन्द्र-अग्नि",
+        "pada": 2,
+        "retrograde": false,
+        "dignity": "neutral"
+      }
+    ]
+  },
+  "current_dasha": {
+    "mahadasha": {
+      "lord": "Rahu",
+      "start": "2016-04-12",
+      "end": "2034-04-12",
+      "duration_years": 18
+    },
+    "antardasha": {
+      "lord": "Mercury",
+      "start": "2024-03-25",
+      "end": "2026-10-12",
+      "duration_years": 2.55
+    }
+  },
+  "dasha_timeline": [
+    {
+      "lord": "Moon",
+      "start": "2003-12-08",
+      "end": "2009-04-12",
+      "duration_years": 5.35,
+      "antardashas": [
+        {
+          "lord": "Moon",
+          "start": "2003-12-08",
+          "end": "2004-05-19"
+        },
+        {
+          "lord": "Mars",
+          "start": "2004-05-19",
+          "end": "2004-09-09"
+        },
+        {
+          "lord": "Rahu",
+          "start": "2004-09-09",
+          "end": "2005-06-29"
+        },
+        {
+          "lord": "Jupiter",
+          "start": "2005-06-29",
+          "end": "2006-03-17"
+        },
+        {
+          "lord": "Saturn",
+          "start": "2006-03-17",
+          "end": "2007-01-20"
+        },
+        {
+          "lord": "Mercury",
+          "start": "2007-01-20",
+          "end": "2007-10-23"
+        },
+        {
+          "lord": "Ketu",
+          "start": "2007-10-23",
+          "end": "2008-02-14"
+        },
+        {
+          "lord": "Venus",
+          "start": "2008-02-14",
+          "end": "2009-01-05"
+        },
+        {
+          "lord": "Sun",
+          "start": "2009-01-05",
+          "end": "2009-04-12"
+        }
+      ]
+    },
+    {
+      "lord": "Mars",
+      "start": "2009-04-12",
+      "end": "2016-04-12",
+      "duration_years": 7,
+      "antardashas": [
+        {
+          "lord": "Mars",
+          "start": "2009-04-12",
+          "end": "2009-09-08"
+        },
+        {
+          "lord": "Rahu",
+          "start": "2009-09-08",
+          "end": "2010-09-27"
+        },
+        {
+          "lord": "Jupiter",
+          "start": "2010-09-27",
+          "end": "2011-09-03"
+        },
+        {
+          "lord": "Saturn",
+          "start": "2011-09-03",
+          "end": "2012-10-12"
+        },
+        {
+          "lord": "Mercury",
+          "start": "2012-10-12",
+          "end": "2013-10-09"
+        },
+        {
+          "lord": "Ketu",
+          "start": "2013-10-09",
+          "end": "2014-03-07"
+        },
+        {
+          "lord": "Venus",
+          "start": "2014-03-07",
+          "end": "2015-05-07"
+        },
+        {
+          "lord": "Sun",
+          "start": "2015-05-07",
+          "end": "2015-09-12"
+        },
+        {
+          "lord": "Moon",
+          "start": "2015-09-12",
+          "end": "2016-04-12"
+        }
+      ]
+    },
+    {
+      "lord": "Rahu",
+      "start": "2016-04-12",
+      "end": "2034-04-12",
+      "duration_years": 18,
+      "antardashas": [
+        {
+          "lord": "Rahu",
+          "start": "2016-04-12",
+          "end": "2018-12-24"
+        },
+        {
+          "lord": "Jupiter",
+          "start": "2018-12-24",
+          "end": "2021-05-19"
+        },
+        {
+          "lord": "Saturn",
+          "start": "2021-05-19",
+          "end": "2024-03-25"
+        },
+        {
+          "lord": "Mercury",
+          "start": "2024-03-25",
+          "end": "2026-10-12"
+        },
+        {
+          "lord": "Ketu",
+          "start": "2026-10-12",
+          "end": "2027-10-31"
+        },
+        {
+          "lord": "Venus",
+          "start": "2027-10-31",
+          "end": "2030-10-30"
+        },
+        {
+          "lord": "Sun",
+          "start": "2030-10-30",
+          "end": "2031-09-24"
+        },
+        {
+          "lord": "Moon",
+          "start": "2031-09-24",
+          "end": "2033-03-25"
+        },
+        {
+          "lord": "Mars",
+          "start": "2033-03-25",
+          "end": "2034-04-12"
+        }
+      ]
+    },
+    {
+      "lord": "Jupiter",
+      "start": "2034-04-12",
+      "end": "2050-04-12",
+      "duration_years": 16,
+      "antardashas": [
+        {
+          "lord": "Jupiter",
+          "start": "2034-04-12",
+          "end": "2036-05-31"
+        },
+        {
+          "lord": "Saturn",
+          "start": "2036-05-31",
+          "end": "2038-12-12"
+        },
+        {
+          "lord": "Mercury",
+          "start": "2038-12-12",
+          "end": "2041-03-19"
+        },
+        {
+          "lord": "Ketu",
+          "start": "2041-03-19",
+          "end": "2042-02-23"
+        },
+        {
+          "lord": "Venus",
+          "start": "2042-02-23",
+          "end": "2044-10-24"
+        },
+        {
+          "lord": "Sun",
+          "start": "2044-10-24",
+          "end": "2045-08-12"
+        },
+        {
+          "lord": "Moon",
+          "start": "2045-08-12",
+          "end": "2046-12-12"
+        },
+        {
+          "lord": "Mars",
+          "start": "2046-12-12",
+          "end": "2047-11-18"
+        },
+        {
+          "lord": "Rahu",
+          "start": "2047-11-18",
+          "end": "2050-04-12"
+        }
+      ]
+    }
+  ],
+  "yogas": [
+    {
+      "name": "Gajakesari Yoga",
+      "name_hi": "गजकेसरी योग",
+      "category": "auspicious",
+      "description": "Moon and Jupiter in mutual kendra (1/4/7/10) — gives intelligence, dignity, eloquence, lasting respect."
+    },
+    {
+      "name": "Mangal Dosha",
+      "name_hi": "मंगल दोष",
+      "category": "dosha",
+      "description": "Mars in marriage-sensitive house from Lagna, Venus. Standard remedies recommended.",
+      "is_cancelled": false
+    }
+  ],
+  "d9": {
+    "name": "D9 Navamsa",
+    "lagna": "Leo",
+    "placements": [
+      {
+        "name": "Sun",
+        "name_hi": "सूर्य",
+        "sign": "Capricorn",
+        "sign_hi": "मकर",
+        "sign_index": 9,
+        "house": 6,
+        "retrograde": false
+      },
+      {
+        "name": "Moon",
+        "name_hi": "चन्द्र",
+        "sign": "Taurus",
+        "sign_hi": "वृषभ",
+        "sign_index": 1,
+        "house": 10,
+        "retrograde": false
+      },
+      {
+        "name": "Mars",
+        "name_hi": "मंगल",
+        "sign": "Cancer",
+        "sign_hi": "कर्क",
+        "sign_index": 3,
+        "house": 12,
+        "retrograde": false
+      },
+      {
+        "name": "Mercury",
+        "name_hi": "बुध",
+        "sign": "Cancer",
+        "sign_hi": "कर्क",
+        "sign_index": 3,
+        "house": 12,
+        "retrograde": false
+      },
+      {
+        "name": "Jupiter",
+        "name_hi": "गुरु",
+        "sign": "Scorpio",
+        "sign_hi": "वृश्चिक",
+        "sign_index": 7,
+        "house": 4,
+        "retrograde": false
+      },
+      {
+        "name": "Venus",
+        "name_hi": "शुक्र",
+        "sign": "Libra",
+        "sign_hi": "तुला",
+        "sign_index": 6,
+        "house": 3,
+        "retrograde": false
+      },
+      {
+        "name": "Saturn",
+        "name_hi": "शनि",
+        "sign": "Pisces",
+        "sign_hi": "मीन",
+        "sign_index": 11,
+        "house": 8,
+        "retrograde": true
+      },
+      {
+        "name": "Rahu",
+        "name_hi": "राहु",
+        "sign": "Scorpio",
+        "sign_hi": "वृश्चिक",
+        "sign_index": 7,
+        "house": 4,
+        "retrograde": false
+      },
+      {
+        "name": "Ketu",
+        "name_hi": "केतु",
+        "sign": "Taurus",
+        "sign_hi": "वृषभ",
+        "sign_index": 1,
+        "house": 10,
+        "retrograde": false
+      }
+    ]
+  },
+  "d10": {
+    "name": "D10 Dashamsa",
+    "lagna": "Sagittarius",
+    "placements": [
+      {
+        "name": "Sun",
+        "name_hi": "सूर्य",
+        "sign": "Aquarius",
+        "sign_hi": "कुम्भ",
+        "sign_index": 10,
+        "house": 3,
+        "retrograde": false
+      },
+      {
+        "name": "Moon",
+        "name_hi": "चन्द्र",
+        "sign": "Gemini",
+        "sign_hi": "मिथुन",
+        "sign_index": 2,
+        "house": 7,
+        "retrograde": false
+      },
+      {
+        "name": "Mars",
+        "name_hi": "मंगल",
+        "sign": "Scorpio",
+        "sign_hi": "वृश्चिक",
+        "sign_index": 7,
+        "house": 12,
+        "retrograde": false
+      },
+      {
+        "name": "Mercury",
+        "name_hi": "बुध",
+        "sign": "Aries",
+        "sign_hi": "मेष",
+        "sign_index": 0,
+        "house": 5,
+        "retrograde": false
+      },
+      {
+        "name": "Jupiter",
+        "name_hi": "गुरु",
+        "sign": "Pisces",
+        "sign_hi": "मीन",
+        "sign_index": 11,
+        "house": 4,
+        "retrograde": false
+      },
+      {
+        "name": "Venus",
+        "name_hi": "शुक्र",
+        "sign": "Gemini",
+        "sign_hi": "मिथुन",
+        "sign_index": 2,
+        "house": 7,
+        "retrograde": false
+      },
+      {
+        "name": "Saturn",
+        "name_hi": "शनि",
+        "sign": "Scorpio",
+        "sign_hi": "वृश्चिक",
+        "sign_index": 7,
+        "house": 12,
+        "retrograde": true
+      },
+      {
+        "name": "Rahu",
+        "name_hi": "राहु",
+        "sign": "Sagittarius",
+        "sign_hi": "धनु",
+        "sign_index": 8,
+        "house": 1,
+        "retrograde": false
+      },
+      {
+        "name": "Ketu",
+        "name_hi": "केतु",
+        "sign": "Gemini",
+        "sign_hi": "मिथुन",
+        "sign_index": 2,
+        "house": 7,
+        "retrograde": false
+      }
+    ]
+  }
+}
