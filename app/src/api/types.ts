@@ -92,3 +92,35 @@ export interface BirthInput {
   longitude: number;
   use_lmt?: boolean;
 }
+
+export interface KootaResult {
+  name: string;
+  score: number;
+  max_score: number;
+  note: string;
+}
+
+export interface ManglikStatus {
+  is_manglik: boolean;
+  sources: string[];
+  softened: boolean;
+  mars_sign: string;
+  mars_house: number;
+  mars_dignity: string;
+}
+
+export interface CompatibilityResponse {
+  bride: string;
+  groom: string;
+  kootas: KootaResult[];
+  total_score: number;
+  max_total: number;
+  bride_manglik: ManglikStatus;
+  groom_manglik: ManglikStatus;
+  manglik_balanced: boolean;
+}
+
+export interface GunaMilanInput {
+  bride: BirthInput;
+  groom: BirthInput;
+}

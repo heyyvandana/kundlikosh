@@ -8,7 +8,9 @@ import Constants from 'expo-constants';
 import type {
   BirthInput,
   ChartResponse,
+  CompatibilityResponse,
   DashaResponse,
+  GunaMilanInput,
   YogasResponse,
 } from './types';
 
@@ -33,4 +35,6 @@ export const api = {
   dasha: (body: BirthInput, num_mahadashas = 5) =>
     instance.post<DashaResponse>(`/dasha?num_mahadashas=${num_mahadashas}`, body),
   yogas: (body: BirthInput) => instance.post<YogasResponse>('/yogas', body),
+  compatibility: (body: GunaMilanInput) =>
+    instance.post<CompatibilityResponse>('/compatibility', body),
 };
