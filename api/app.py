@@ -18,6 +18,7 @@ Endpoints:
 
 from __future__ import annotations
 
+import os
 from typing import Optional
 
 from fastapi import FastAPI, HTTPException
@@ -273,7 +274,7 @@ def chat(payload: ChatInput):
             user_message=payload.message,
             history=history,
         )
-        return {"ok": True, "reply": reply, "model": "gemini-2.0-flash"}
+        return {"ok": True, "reply": reply, "model": os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")}
     except GeminiUnavailable as e:
         raise HTTPException(
             status_code=503,
