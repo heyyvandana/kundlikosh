@@ -18,6 +18,8 @@ import type {
   PanchangInput,
   PanchangResponse,
   YogasResponse,
+  ChatInput,
+  ChatResponse,
 } from './types';
 
 interface ExtraConfig {
@@ -59,4 +61,5 @@ export const api = {
   daily: (body: DailyInput) => instance.post<DailyResponse>('/daily', body),
   lifeStory: (body: LifeStoryInput) =>
     instance.post<LifeStoryResponse>('/life-story', body),
+  chat: (body: ChatInput) => instance.post<ChatResponse>('/chat', body, { timeout: 60_000 }),
 };

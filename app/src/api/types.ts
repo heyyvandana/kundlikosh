@@ -241,3 +241,21 @@ export interface LifeStoryResponse {
   overall_signature_en: string;
   overall_signature_hi: string;
 }
+
+export interface ChatTurn {
+  role: 'user' | 'model';
+  text: string;
+}
+
+export interface ChatInput extends BirthInput {
+  message: string;
+  history?: ChatTurn[];
+  locale?: 'en' | 'hi';
+  on_date?: string;
+}
+
+export interface ChatResponse {
+  ok: boolean;
+  reply: string;
+  model: string;
+}

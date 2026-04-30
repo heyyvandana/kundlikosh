@@ -12,6 +12,7 @@ Endpoints:
     POST /panchang      — 5-limb Vedic calendar for any date+location
     POST /daily         — personal daily reading (Tarabala + Chandra Bala + verdict)
     POST /life-story    — full classical phalit: past/present/future Mahadasha narratives
+    POST /chat          — AI Astrologer (Gemini Flash) grounded in chart + life story
     GET  /health
 """
 
@@ -38,6 +39,8 @@ from kundlikosh_engine import (
     detect_yogas,
     guna_milan,
 )
+from kundlikosh_engine.ai_context import build_full_context, make_system_prompt
+from kundlikosh_engine.gemini_client import GeminiUnavailable, ask_gemini
 
 app = FastAPI(
     title="KundliKosh API",
@@ -189,6 +192,65 @@ def life_story(payload: LifeStoryInput):
             raise HTTPException(status_code=400, detail=f"invalid on_date: {e}")
     ls = compute_life_story(chart, on_date=on, num_future=payload.num_future)
     return ls.to_dict()
+
+
+class ChatTurn(BaseModel):
+    role: str = Field(..., description="user | model")
+    text: str
+
+
+class ChatInput(BirthInput):
+    message: str = Field(..., min_length=1, max_length=2000)
+    history: list[ChatTurn] = Field(default_factory=list)
+    locale: str = Field(default="en", description="en | hi")
+    on_date: Optional[str] = Field(default=None)
+
+
+@app.post("/chat")
+def chat(payload: ChatInput):
+    """Free-form Vedic Q&A grounded in the native's chart + life story.
+
+    The chart is computed deterministically; only the *voice* is LLM.
+    The system prompt forbids invention of facts not in the context.
+    """
+    chart = _chart_from(payload)
+    on: Optional[date_cls] = None
+    if payload.on_date:
+        try:
+            on = date_cls.fromisoformat(payload.on_date)
+        except ValueError as e:
+            raise HTTPException(status_code=400, detail=f"invalid on_date: {e}")
+
+    life_story = compute_life_story(chart, on_date=on, num_future=4)
+
+    pn = None
+    try:
+        pn_date = on or date_cls.today()
+        pn = compute_panchang(
+            on_date=pn_date,
+            latitude=payload.latitude,
+            longitude=payload.longitude,
+            timezone_str=payload.timezone,
+        )
+    except Exception:
+        pn = None
+
+    context = build_full_context(chart, life_story=life_story, panchang=pn, on_date=on)
+    system_prompt = make_system_prompt(context, locale=payload.locale)
+
+    history = [{"role": h.role, "text": h.text} for h in payload.history]
+    try:
+        reply = ask_gemini(
+            system_prompt=system_prompt,
+            user_message=payload.message,
+            history=history,
+        )
+        return {"ok": True, "reply": reply, "model": "gemini-2.0-flash"}
+    except GeminiUnavailable as e:
+        raise HTTPException(
+            status_code=503,
+            detail=f"AI Astrologer unavailable: {e}. Set GEMINI_API_KEY on the server.",
+        )
 
 
 @app.post("/compatibility")
