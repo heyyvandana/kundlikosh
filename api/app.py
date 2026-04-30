@@ -41,6 +41,7 @@ from kundlikosh_engine import (
 )
 from kundlikosh_engine.ai_context import build_full_context, make_system_prompt
 from kundlikosh_engine.gemini_client import GeminiUnavailable, ask_gemini
+from kundlikosh_engine.sade_sati import compute_sade_sati
 
 app = FastAPI(
     title="KundliKosh API",
@@ -192,6 +193,33 @@ def life_story(payload: LifeStoryInput):
             raise HTTPException(status_code=400, detail=f"invalid on_date: {e}")
     ls = compute_life_story(chart, on_date=on, num_future=payload.num_future)
     return ls.to_dict()
+
+
+@app.post("/sade-sati")
+def sade_sati(payload: LifeStoryInput):
+    chart = _chart_from(payload)
+    on: Optional[date_cls] = None
+    if payload.on_date:
+        try:
+            on = date_cls.fromisoformat(payload.on_date)
+        except ValueError as e:
+            raise HTTPException(status_code=400, detail=f"invalid on_date: {e}")
+    s = compute_sade_sati(chart, on_date=on)
+    return {
+        "in_sade_sati": s.in_sade_sati,
+        "in_dhaiya": s.in_dhaiya,
+        "phase": s.phase,
+        "phase_label_en": s.phase_label_en,
+        "phase_label_hi": s.phase_label_hi,
+        "description_en": s.description_en,
+        "description_hi": s.description_hi,
+        "saturn_sign": s.saturn_sign,
+        "saturn_sign_hi": s.saturn_sign_hi,
+        "moon_sign": s.moon_sign,
+        "relative_house": s.relative_house,
+        "started_on": s.started_on,
+        "ends_on": s.ends_on,
+    }
 
 
 class ChatTurn(BaseModel):

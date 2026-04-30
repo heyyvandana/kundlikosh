@@ -20,6 +20,7 @@ from .chart import Chart, PlanetPosition
 from .dasha import current_dasha, compute_antardashas, compute_mahadashas
 from .panchang import Panchang
 from .phalit import LifeStory
+from .sade_sati import compute_sade_sati
 from .yogas import detect_yogas
 
 
@@ -167,16 +168,38 @@ Nakshatra: {panchang.nakshatra}    Yoga: {panchang.yoga}    Karana: {panchang.ka
 """
 
 
+def build_sade_sati_context(chart: Chart, on_date: Optional[date_cls] = None) -> str:
+    """Render Saturn-vs-Moon transit phase (Sade Sati / Dhaiya) as text."""
+    s = compute_sade_sati(chart, on_date=on_date)
+    if not (s.in_sade_sati or s.in_dhaiya):
+        return (
+            f"--- SATURN TRANSIT ---\n"
+            f"Saturn currently in {s.saturn_sign} (H{s.relative_house} from natal Moon "
+            f"{s.moon_sign}) — NOT in Sade Sati or Dhaiya. Neutral/positive transit.\n"
+        )
+    period = ""
+    if s.started_on or s.ends_on:
+        period = f"  Started: {s.started_on or '?'}    Ends: {s.ends_on or '?'}\n"
+    return (
+        f"--- SATURN TRANSIT (active) ---\n"
+        f"{s.phase_label_en} — Saturn in {s.saturn_sign}, "
+        f"H{s.relative_house} from natal Moon ({s.moon_sign}).\n"
+        f"{period}"
+        f"  Classical reading: {s.description_en}\n"
+    )
+
+
 def build_full_context(
     chart: Chart,
     life_story: Optional[LifeStory] = None,
     panchang: Optional[Panchang] = None,
     on_date: Optional[date_cls] = None,
 ) -> str:
-    """The whole spine — chart + dasha + life story + panchang."""
+    """The whole spine — chart + dasha + life story + panchang + Saturn transit."""
     pieces = [build_chart_context(chart), build_dasha_context(chart, on_date=on_date)]
     if life_story:
         pieces.append(build_life_story_context(life_story))
+    pieces.append(build_sade_sati_context(chart, on_date=on_date))
     if panchang:
         pieces.append(build_panchang_context(panchang))
     return "\n\n".join(pieces)
