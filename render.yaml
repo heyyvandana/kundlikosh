@@ -1,0 +1,14 @@
+# Render.com blueprint for KundliKosh API.
+# Deploy: https://render.com/deploy — point at this repo; Render auto-picks up.
+services:
+  - type: web
+    name: kundlikosh-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./api/Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: "1"
+    autoDeploy: true

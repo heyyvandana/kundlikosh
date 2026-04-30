@@ -20,17 +20,29 @@ import type {
   YogasResponse,
 } from './types';
 
-const DEFAULT_BASE =
-  (Constants.expoConfig?.extra as { apiBaseUrl?: string } | undefined)?.apiBaseUrl ??
-  'http://localhost:8000';
+interface ExtraConfig {
+  apiBaseUrl?: string;
+  apiBasicAuthUser?: string;
+  apiBasicAuthPass?: string;
+}
+
+const extra = (Constants.expoConfig?.extra ?? {}) as ExtraConfig;
+const DEFAULT_BASE = extra.apiBaseUrl ?? 'http://localhost:8000';
+
+const buildInstance = (url: string): AxiosInstance => {
+  const auth =
+    extra.apiBasicAuthUser && extra.apiBasicAuthPass
+      ? { username: extra.apiBasicAuthUser, password: extra.apiBasicAuthPass }
+      : undefined;
+  return axios.create({ baseURL: url, timeout: 20_000, auth });
+};
 
 let baseURL = DEFAULT_BASE;
-
-let instance: AxiosInstance = axios.create({ baseURL, timeout: 20_000 });
+let instance: AxiosInstance = buildInstance(baseURL);
 
 export const setApiBase = (url: string) => {
   baseURL = url;
-  instance = axios.create({ baseURL, timeout: 20_000 });
+  instance = buildInstance(baseURL);
 };
 
 export const getApiBase = () => baseURL;
