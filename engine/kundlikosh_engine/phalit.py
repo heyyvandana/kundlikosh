@@ -281,7 +281,55 @@ def _build_themes(p: PlanetPosition, lord: str) -> tuple[list[str], list[str]]:
     return themes_en[:6], themes_hi[:6]
 
 
-def _build_summary(p: PlanetPosition, lord: str, *, conj: list[str], aspects: list[str], duration: float) -> tuple[str, str]:
+def _life_stage(start_age: float, end_age: float) -> tuple[str, str]:
+    """Classify the dasha's life-stage and give a short EN/HI framing phrase."""
+    mid = (start_age + end_age) / 2
+    if end_age <= 7:
+        return (
+            "This is the bala (infancy) phase — the planet's themes shape the earliest imprints, often experienced through the parents and home rather than as conscious agency.",
+            "यह बाल्यावस्था है — ग्रह के विषय सबसे प्रारंभिक छाप गढ़ते हैं, जो प्रायः माता-पिता एवं गृह के माध्यम से अनुभव होते हैं।",
+        )
+    if end_age <= 14:
+        return (
+            "Childhood and pre-adolescence — themes here register as formative tendencies, schooling, and the texture of family life.",
+            "बाल्य एवं पूर्व-किशोरावस्था — विषय यहाँ शिक्षा, परिवार और बनती हुई प्रवृत्तियों के रूप में दर्ज होते हैं।",
+        )
+    if mid <= 25:
+        return (
+            "Late teens / early adulthood — this is identity-formation, education's culmination, first independent choices in love and career.",
+            "किशोरावस्था का अंत / युवावस्था का आरंभ — पहचान निर्माण, शिक्षा की पूर्णता, प्रेम और जीविका में प्रथम स्वतंत्र निर्णय।",
+        )
+    if mid <= 40:
+        return (
+            "Prime young-adult years — career consolidation, marriage, children, the building of a life. Whatever this lord activates here is foundational.",
+            "युवा गृहस्थ-काल — जीविका की दृढ़ता, विवाह, संतान, जीवन का निर्माण। इस अवधि में जो भी सक्रिय होता है वह आधारशिला बनता है।",
+        )
+    if mid <= 55:
+        return (
+            "Mid-life — established responsibilities, peak professional standing, possible mid-life re-evaluation of meaning.",
+            "मध्यावस्था — स्थापित उत्तरदायित्व, व्यावसायिक शिखर, अर्थ-पुनर्मूल्यांकन की संभावना।",
+        )
+    if mid <= 70:
+        return (
+            "Mature adulthood — wisdom transmitted, legacy built, attention turning toward dharma and the next generation.",
+            "प्रौढ़ावस्था — ज्ञान-संचरण, धरोहर का निर्माण, धर्म एवं अगली पीढ़ी की ओर ध्यान।",
+        )
+    return (
+        "Elder years (vridhdha) — moksha-ward orientation; outer events soften, inner life deepens.",
+        "वृद्धावस्था — मोक्ष-उन्मुख चरण; बाहरी घटनाएँ शांत होती हैं, आंतरिक जीवन गहरा।",
+    )
+
+
+def _build_summary(
+    p: PlanetPosition,
+    lord: str,
+    *,
+    conj: list[str],
+    aspects: list[str],
+    duration: float,
+    start_age: float = 0.0,
+    end_age: float = 0.0,
+) -> tuple[str, str]:
     """Narrative paragraph for the chapter."""
     karaka_main_en = PLANET_KARAKAS_EN[lord][0]
     karaka_main_hi = PLANET_KARAKAS_HI[lord][0]
@@ -327,7 +375,12 @@ def _build_summary(p: PlanetPosition, lord: str, *, conj: list[str], aspects: li
         s3_en = " No major conjunctions or external aspects — the planet works in isolation, themes emerge from its nature alone."
         s3_hi = " कोई महत्वपूर्ण युति या दृष्टि नहीं — ग्रह अपने स्वभाव से ही फल देता है।"
 
-    return s1_en + s2_en + s3_en, s1_hi + s2_hi + s3_hi
+    # Sentence 4 — life-stage framing
+    s4_en, s4_hi = _life_stage(start_age, end_age)
+    s4_en = " " + s4_en
+    s4_hi = " " + s4_hi
+
+    return s1_en + s2_en + s3_en + s4_en, s1_hi + s2_hi + s3_hi + s4_hi
 
 
 def _build_timing_notes(maha: DashaPeriod, chart: Chart, native_birth: datetime) -> tuple[list[str], list[str]]:
@@ -363,8 +416,12 @@ def _make_chapter(
     conj = [q.name for q in _planets_in_house(chart, house) if q.name != lord]
     aspects = [a for a in _aspects_received(chart, house) if a != lord]
     themes_en, themes_hi = _build_themes(p, lord)
+    start_age = round(_years_between(native_birth, maha.start), 1)
+    end_age = round(_years_between(native_birth, maha.end), 1)
     summary_en, summary_hi = _build_summary(
-        p, lord, conj=conj, aspects=aspects, duration=maha.duration_years
+        p, lord,
+        conj=conj, aspects=aspects, duration=maha.duration_years,
+        start_age=start_age, end_age=end_age,
     )
     timing_en, timing_hi = _build_timing_notes(maha, chart, native_birth)
 
@@ -380,8 +437,8 @@ def _make_chapter(
         lord_hi=K.PLANETS_HI[lord],
         start=maha.start.strftime("%Y-%m-%d"),
         end=maha.end.strftime("%Y-%m-%d"),
-        start_age=round(_years_between(native_birth, maha.start), 1),
-        end_age=round(_years_between(native_birth, maha.end), 1),
+        start_age=start_age,
+        end_age=end_age,
         duration_years=round(maha.duration_years, 2),
         house=house,
         sign=p.sign,
